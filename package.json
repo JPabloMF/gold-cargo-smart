@@ -1,0 +1,11 @@
+{
+  "name": "gold-cargo-smart",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
