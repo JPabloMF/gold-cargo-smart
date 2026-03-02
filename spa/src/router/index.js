@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "../stores/auth";
-import LoginView from "../views/Login.vue";
+import Login from "../views/Login.vue";
+import Dashboard from "../views/Dashboard/Dashboard.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,20 +13,32 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: LoginView,
+      component: Login,
+      meta: { requiresAuth: false },
+    },
+    {
+      // The public facing URL for external users
+      path: "/request-quote",
+      name: "public-quote",
+      component: () => import("../views/NewQuote.vue"),
       meta: { requiresAuth: false },
     },
     {
       path: "/dashboard",
-      name: "dashboard",
-      component: () => import("../views/Dashboard.vue"),
+      component: Dashboard,
       meta: { requiresAuth: true },
-    },
-    {
-      path: "/quotes/new",
-      name: "new-quote",
-      component: () => import("../views/NewQuote.vue"),
-      meta: { requiresAuth: true },
+      children: [
+        {
+          path: "",
+          name: "dashboard-overview",
+          component: () => import("../views/Dashboard/DashboardOverview.vue"),
+        },
+        {
+          path: "history",
+          name: "dashboard-history",
+          component: () => import("../views/Dashboard/DashboardHistory.vue"),
+        },
+      ],
     },
   ],
 });
@@ -36,11 +49,9 @@ router.beforeEach((to, from, next) => {
 
   if (to.meta.requiresAuth && !authStore.token) {
     next("/login");
-  }
-  else if (to.path === "/login" && authStore.token) {
+  } else if (to.path === "/login" && authStore.token) {
     next("/dashboard");
-  }
-  else {
+  } else {
     next();
   }
 });
