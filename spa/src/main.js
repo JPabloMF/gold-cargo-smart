@@ -5,7 +5,7 @@ import './assets/styles/style.css'
 import App from './App.vue'
 
 import PrimeVue from "primevue/config";
-import Lara from "@primeuix/themes/lara";
+import Aura from "@primeuix/themes/aura";
 
 import { FontAwesomeIcon } from '@/utils/plugins/font-awesome';
 
@@ -16,7 +16,7 @@ app.use(pinia);
 app.use(router);
 app.use(PrimeVue, {
   theme: {
-    preset: Lara,
+    preset: Aura,
     options: {
       darkModeSelector: "light",
     },
