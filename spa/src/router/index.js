@@ -20,7 +20,7 @@ const router = createRouter({
       // The public facing URL for external users
       path: "/request-quote",
       name: "public-quote",
-      component: () => import("../views/quote/NewQuote.vue"),
+      component: () => import("../views/Quote/NewQuote.vue"),
       meta: { requiresAuth: false },
     },
     {
