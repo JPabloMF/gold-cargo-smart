@@ -8,7 +8,7 @@
     </template>
   </Menubar>
   <div class="flex flex-wrap justify-center p-[0.5%] gap-3">
-    <Panel header="Nueva Cotización" class="lg:w-[66.2%] md:w-full sm:w-full">
+    <Panel header="Nueva Cotización" class="lg:w-[66%] md:w-full sm:w-full">
       <ServiceSelection />
       <ShipmentDetails />
       <template v-if="store.selectedLoadType?.value === 'lcl'">
