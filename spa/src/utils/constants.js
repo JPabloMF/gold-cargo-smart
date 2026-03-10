@@ -1995,8 +1995,7 @@ export const LOAD_TYPES = [
 
 export const CONTAINER_TYPES = [
   { name: "20'", value: "20" },
+  { name: "20' HC", value: "20hc" },
   { name: "40'", value: "40" },
   { name: "40' HC", value: "40hc" },
-  { name: "50'", value: "50" },
-  { name: "50' HC", value: "50hc" },
 ];
