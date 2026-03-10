@@ -7,8 +7,8 @@
       <Button label="Contactanos" severity="success"></Button>
     </template>
   </Menubar>
-  <div class="flex gap-3">
-    <Panel header="Nueva Cotización" class="ml-3 mt-3 w-3/4">
+  <div class="flex flex-wrap justify-center p-[0.5%] gap-3">
+    <Panel header="Nueva Cotización" class="lg:w-[66.2%] md:w-full sm:w-full">
       <ServiceSelection />
       <ShipmentDetails />
       <template v-if="store.selectedLoadType?.value === 'lcl'">

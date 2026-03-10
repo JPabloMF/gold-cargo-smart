@@ -3,8 +3,8 @@
     <Divider align="center" type="dotted">
       <b>Selecciona el servicio que necesitas</b>
     </Divider>
-    <div class="flex justify-content-center gap-3">
-      <Card class="w-1/3">
+    <div class="flex flex-wrap justify-between gap-y-5">
+      <Card class="h-full w-full lg:w-[33%]">
         <template #title>
           <div class="flex justify-between items-center">
             <div class="flex items-center gap-2">
@@ -21,8 +21,8 @@
           </p>
         </template>
       </Card>
-      <BlockUI blocked class="w-1/3">
-        <Card>
+      <BlockUI blocked class="w-full lg:w-[33%]">
+        <Card class="h-full">
           <template #title>
             <div class="flex justify-between items-center">
               <div class="flex items-center gap-2">
@@ -43,7 +43,7 @@
           </template>
         </Card>
       </BlockUI>
-      <BlockUI blocked class="w-1/3">
+      <BlockUI blocked class="w-full lg:w-[33%]">
         <Card class="h-full">
           <template #title>
             <div class="flex justify-between items-center">

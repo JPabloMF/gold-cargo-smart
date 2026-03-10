@@ -1,5 +1,5 @@
 <template>
-  <Panel header="Resumen de la Cotización" class="mr-3 mt-3 w-1/4">
+  <Panel header="Resumen de la Cotización" class="lg:w-[33.2%]">
     <p class="m-0">
       Aquí se mostrará un resumen de la cotización basada en la información
       proporcionada.

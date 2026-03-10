@@ -3,20 +3,21 @@
     <Divider align="center" type="dotted">
       <b>Peso y Dimensiones de la Carga</b>
     </Divider>
-    <div class="flex justify-center items-center gap-5">
-      <FloatLabel variant="on">
+    <div class="flex flex-wrap justify-center items-center gap-5">
+      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
         <IconField>
-          <InputNumber id="weight" v-model="store.weight" showClear />
+          <InputNumber id="weight" class="w-full" v-model="store.weight" showClear />
           <InputIcon>
             <font-awesome-icon icon="fa-solid fa-weight-hanging" />
           </InputIcon>
         </IconField>
         <label for="weight">Peso</label>
       </FloatLabel>
-      <FloatLabel variant="on">
+      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
         <IconField>
           <InputMask
             id="dimensions"
+            class="w-full"
             v-model="store.dimensions"
             mask="9.9 x 9.9 x 9.9"
             slotChar="Ancho x Largo x Alto"
@@ -28,7 +29,7 @@
         </IconField>
         <label for="dimensions">Dimensiones</label>
       </FloatLabel>
-      <Fieldset legend="IMO">
+      <Fieldset class="w-full lg:w-56 md:w-full sm:w-full" legend="IMO">
         <RadioButtonGroup name="ingredient" class="flex flex-wrap gap-4">
           <div class="flex items-center gap-2">
             <RadioButton inputId="cheese" value="Cheese" />

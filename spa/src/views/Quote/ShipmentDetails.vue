@@ -3,8 +3,8 @@
     <Divider align="center" type="dotted">
       <b>Completa la información</b>
     </Divider>
-    <div class="flex justify-center gap-5">
-      <FloatLabel class="w-full md:w-56" variant="on">
+    <div class="flex flex-wrap justify-center gap-5">
+      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
         <Select
           v-model="store.selectedOriginCountry"
           :options="countries"
@@ -31,7 +31,7 @@
         </Select>
         <label for="origin_country">Pais de Origen</label>
       </FloatLabel>
-      <FloatLabel class="w-full md:w-56" variant="on">
+      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
         <Select
           v-model="store.selectedDestinationCountry"
           :options="countries"
@@ -58,7 +58,7 @@
         </Select>
         <label for="destination_country">Pais de Destino</label>
       </FloatLabel>
-      <FloatLabel class="w-full md:w-56" variant="on">
+      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
         <Select
           v-model="store.selectedLoadType"
           :options="loadTypes"

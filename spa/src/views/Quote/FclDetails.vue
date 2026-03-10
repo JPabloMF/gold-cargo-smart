@@ -3,27 +3,27 @@
     <Divider align="center" type="dotted">
       <b>Dimensiones del Contenedor</b>
     </Divider>
-    <div class="flex justify-center items-center gap-5">
-      <FloatLabel variant="on">
+    <div class="flex flex-wrap justify-center items-center gap-5">
+      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
         <Select
           v-model="store.selectedContainerType"
           :options="containerTypes"
           inputId="container_type"
           optionLabel="name"
-          class="w-3xs"
+          class="w-full"
         />
         <label for="container_type">Tipo de Contenedor</label>
       </FloatLabel>
-      <FloatLabel variant="on">
+      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
         <IconField>
-          <InputNumber id="weight" v-model="store.weight" showClear />
+          <InputNumber id="weight" class="w-full" v-model="store.weight" showClear />
           <InputIcon>
             <font-awesome-icon icon="fa-solid fa-weight-hanging" />
           </InputIcon>
         </IconField>
         <label for="weight">Peso</label>
       </FloatLabel>
-      <Fieldset legend="IMO">
+      <Fieldset class="w-full lg:w-56 md:w-full sm:w-full" legend="IMO">
         <RadioButtonGroup name="ingredient" class="flex flex-wrap gap-4">
           <div class="flex items-center gap-2">
             <RadioButton inputId="cheese" value="Cheese" />
