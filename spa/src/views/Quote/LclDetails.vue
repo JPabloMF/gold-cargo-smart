@@ -11,23 +11,22 @@
             <font-awesome-icon icon="fa-solid fa-weight-hanging" />
           </InputIcon>
         </IconField>
-        <label for="weight">Peso</label>
+        <label for="weight">Peso en Kg</label>
       </FloatLabel>
-      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
+      <FloatLabel class="w-full lg:w-80 md:w-full sm:w-full" variant="on">
         <IconField>
           <InputMask
             id="dimensions"
             class="w-full"
             v-model="store.dimensions"
             mask="9.9 x 9.9 x 9.9"
-            slotChar="Ancho x Largo x Alto"
             showClear
           />
           <InputIcon>
             <font-awesome-icon icon="fa-solid fa-ruler-vertical" />
           </InputIcon>
         </IconField>
-        <label for="dimensions">Dimensiones</label>
+        <label for="dimensions">Dimensiones Ancho x Largo x Alto</label>
       </FloatLabel>
       <Fieldset class="w-full lg:w-56 md:w-full sm:w-full" legend="IMO">
         <RadioButtonGroup name="ingredient" class="flex flex-wrap gap-4">

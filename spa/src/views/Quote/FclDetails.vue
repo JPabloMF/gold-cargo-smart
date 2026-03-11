@@ -21,7 +21,7 @@
             <font-awesome-icon icon="fa-solid fa-weight-hanging" />
           </InputIcon>
         </IconField>
-        <label for="weight">Peso</label>
+        <label for="weight">Peso en Kg</label>
       </FloatLabel>
       <Fieldset class="w-full lg:w-56 md:w-full sm:w-full" legend="IMO">
         <RadioButtonGroup name="ingredient" class="flex flex-wrap gap-4">
