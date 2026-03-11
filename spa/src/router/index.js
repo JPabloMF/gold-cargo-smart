@@ -38,6 +38,11 @@ const router = createRouter({
           name: "dashboard-history",
           component: () => import("../views/Dashboard/DashboardHistory.vue"),
         },
+        {
+          path: "rates",
+          name: "dashboard-rates",
+          component: () => import("../views/Dashboard/DashboardRates.vue"),
+        },
       ],
     },
   ],

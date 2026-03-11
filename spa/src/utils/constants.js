@@ -1999,3 +1999,12 @@ export const CONTAINER_TYPES = [
   { name: "40' HC", value: "40hc" },
   { name: "40' NOR", value: "40nor" },
 ];
+
+export const CONTINENTS = [
+  { name: "Africa", value: "africa" },
+  { name: "America", value: "america" },
+  { name: "Antarctica", value: "antarctica" },
+  { name: "Asia", value: "asia" },
+  { name: "Europe", value: "europe" },
+  { name: "Oceania", value: "oceania" },
+];

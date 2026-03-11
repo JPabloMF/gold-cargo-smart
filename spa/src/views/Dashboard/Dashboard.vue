@@ -8,6 +8,7 @@
       <nav class="nav-links">
         <router-link to="/dashboard" exact-active-class="active">Overview</router-link>
         <router-link to="/dashboard/history" active-class="active">Quote History</router-link>
+        <router-link to="/dashboard/rates" active-class="active">Rates Management</router-link>
       </nav>
 
       <button @click="handleLogout" class="logout-btn">Logout</button>
