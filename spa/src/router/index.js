@@ -17,6 +17,12 @@ const router = createRouter({
       meta: { requiresAuth: false },
     },
     {
+      path: "/unauthorized",
+      name: "unauthorized",
+      component: () => import("../views/Unauthorized.vue"),
+      meta: { requiresAuth: false },
+    },
+    {
       // The public facing URL for external users
       path: "/request-quote",
       name: "public-quote",
@@ -45,6 +51,11 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "not-found",
+      component: () => import("../views/NotFound.vue"),
+    },
   ],
 });
 
@@ -53,7 +64,7 @@ router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
 
   if (to.meta.requiresAuth && !authStore.token) {
-    next("/login");
+    next({ name: "unauthorized" });
   } else if (to.path === "/login" && authStore.token) {
     next("/dashboard");
   } else {
