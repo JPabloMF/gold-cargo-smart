@@ -7,7 +7,7 @@
       <Button label="Contactanos" severity="success"></Button>
     </template>
   </Menubar>
-  <div class="flex flex-wrap justify-center p-[0.5%] gap-3">
+  <div class="flex flex-wrap justify-center p-[0.5%] gap-3 text-lg">
     <Panel header="Nueva Cotización" class="lg:w-[66%] md:w-full sm:w-full">
       <ServiceSelection />
       <ShipmentDetails />
