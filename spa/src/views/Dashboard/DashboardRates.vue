@@ -8,49 +8,59 @@
     <Tabs :value="activeContinent" @update:value="onTabChange">
       <TabList>
         <Tab v-for="continent in CONTINENTS" :key="continent.value" :value="continent.value">
+          <i :class="getContinentIcon(continent.value)" class="mr-2"></i>
           {{ continent.name }}
         </Tab>
       </TabList>
       <TabPanels>
         <TabPanel v-for="continent in CONTINENTS" :key="continent.value" :value="continent.value">
-          <div class="continent-content mt-4">
+          <div class="continent-content mt-3">
             <div class="upload-section card">
-              <div class="flex flex-col gap-2 mb-4">
-                <label>Choose Excel File for {{ continent.name }} (.xlsx, .xls)</label>
-                <div class="flex gap-2">
-                  <FileUpload 
-                    mode="basic" 
-                    name="demo[]" 
-                    accept=".xlsx, .xls" 
-                    :maxFileSize="1000000" 
-                    customUpload 
-                    @select="(event) => onFileSelect(event, continent.value)" 
-                    auto 
-                    chooseLabel="Select File"
-                  />
-                  <Button 
-                    v-if="states[continent.value]?.rawFileData" 
-                    label="Clear" 
-                    icon="pi pi-times" 
-                    severity="secondary" 
-                    @click="clearFile(continent.value)" 
-                  />
-                </div>
+              <div class="upload-header">
+                <h3>Update {{ continent.name }} Rates</h3>
+                <p>Select an Excel file (.xlsx, .xls) to upload new data.</p>
               </div>
               
-              <div v-if="states[continent.value]?.fileName" class="mb-3">
-                <strong>Selected file:</strong> {{ states[continent.value].fileName }}
+              <div class="flex items-center gap-3">
+                <FileUpload 
+                  mode="basic" 
+                  name="demo[]" 
+                  accept=".xlsx, .xls" 
+                  :maxFileSize="1000000" 
+                  customUpload 
+                  @select="(event) => onFileSelect(event, continent.value)" 
+                  auto 
+                  chooseLabel="Select File"
+                  class="p-button-outlined"
+                />
+                <Button 
+                  v-if="states[continent.value]?.rawFileData" 
+                  label="Clear" 
+                  icon="pi pi-times" 
+                  severity="secondary" 
+                  variant="text"
+                  @click="clearFile(continent.value)" 
+                />
+              </div>
+              
+              <div v-if="states[continent.value]?.fileName" class="selected-file">
+                <i class="pi pi-file-excel mr-2"></i>
+                <strong>Selected:</strong> {{ states[continent.value].fileName }}
               </div>
             </div>
 
-            <div v-if="states[continent.value]?.loading" class="mt-4 card flex justify-center py-8">
-              <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+            <div v-if="states[continent.value]?.loading" class="loading-state card">
+              <i class="pi pi-spin pi-spinner"></i>
+              <span>Processing data...</span>
             </div>
 
-            <div v-else-if="states[continent.value]?.ratesData.length > 0" class="results-section mt-4">
-              <div class="flex justify-between items-center mb-3">
-                <h2>Data: {{ continent.name }} ({{ states[continent.value].ratesData.length }} rows)</h2>
-                <div class="flex gap-2">
+            <div v-else-if="states[continent.value]?.ratesData.length > 0" class="results-section mt-3">
+              <div class="table-header card">
+                <div class="info">
+                  <h2>{{ continent.name }} Database</h2>
+                  <p>{{ states[continent.value].ratesData.length }} total rows found</p>
+                </div>
+                <div class="actions">
                   <Button 
                     v-if="states[continent.value].hasChanges"
                     label="Save Changes" 
@@ -68,18 +78,21 @@
                 paginator 
                 :rows="10" 
                 :rowsPerPageOptions="[10, 20, 50]"
-                tableStyle="min-width: 50rem"
+                class="mt-3 custom-table"
               >
                 <Column v-for="col of states[continent.value].columns" :key="col.field" :field="col.field" :header="col.header" sortable></Column>
               </DataTable>
             </div>
             
-            <div v-else-if="states[continent.value]?.fileName" class="no-data mt-4 card">
-              <p>Processing file or no data found in the selected file.</p>
+            <div v-else-if="states[continent.value]?.fileName" class="no-data-state card">
+              <i class="pi pi-exclamation-circle mb-2"></i>
+              <p>No valid data found in the selected file. Please check the Excel structure.</p>
             </div>
 
-            <div v-else class="mt-4 card">
-              <p>No rates stored for {{ continent.name }}. Upload an Excel file to get started.</p>
+            <div v-else class="empty-state card">
+              <i class="pi pi-cloud-upload mb-2"></i>
+              <h3>No rates stored for {{ continent.name }}</h3>
+              <p>Please upload an Excel file to populate the database for this continent.</p>
             </div>
           </div>
         </TabPanel>
@@ -129,6 +142,16 @@ const onTabChange = (value) => {
   if (states[value].ratesData.length === 0 && !states[value].fileName) {
     fetchRates(value);
   }
+};
+
+const getContinentIcon = (val) => {
+  const icons = {
+    'asia': 'pi pi-map-marker',
+    'america': 'pi pi-compass',
+    'europe': 'pi pi-flag',
+    'oceania': 'pi pi-globe'
+  };
+  return icons[val] || 'pi pi-map';
 };
 
 const fetchRates = async (continentValue) => {
@@ -233,42 +256,159 @@ const saveData = async (continentValue) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .rates-management {
-  padding: 1rem;
-}
-
-.header {
-  margin-bottom: 2rem;
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 1.5rem;
-}
-
-.header p {
-  color: #666;
-  margin: 0.5rem 0 0 0;
+  .header {
+    margin-bottom: 2rem;
+    h1 {
+      font-size: 1.8rem; // Reduced from 2.2rem
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.3rem;
+    }
+    p {
+      font-size: 1.2rem; // Reduced from 1.4rem
+      color: #64748b;
+    }
+  }
 }
 
 .card {
   background: #ffffff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 1.5rem; // Reduced from 1.8rem
+  border-radius: 0.8rem; // Reduced from 1rem
+  box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.05);
+  border: 0.1rem solid #e2e8f0;
 }
 
-.flex-col {
+.upload-section {
+  display: flex;
   flex-direction: column;
+  gap: 1.2rem;
+
+  .upload-header {
+    h3 {
+      font-size: 1.4rem; // Reduced from 1.6rem
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 0.2rem;
+    }
+    p {
+      font-size: 1.1rem; // Reduced from 1.3rem
+      color: #94a3b8;
+    }
+  }
+
+  .selected-file {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem; // Reduced from 1.3rem
+    color: #10b981;
+    background-color: #ecfdf5;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    width: fit-content;
+
+    i {
+      font-size: 1.2rem;
+    }
+  }
 }
 
-.justify-center {
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: none;
+
+  .info {
+    h2 {
+      font-size: 1.6rem; // Reduced from 1.8rem
+      font-weight: 600;
+      color: #1e293b;
+    }
+    p {
+      font-size: 1.1rem; // Reduced from 1.2rem
+      color: #64748b;
+    }
+  }
+}
+
+.loading-state, .empty-state, .no-data-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  padding: 3rem 0; // Reduced from 5rem
+  text-align: center;
+  
+  i {
+    font-size: 2.8rem; // Reduced from 3.2rem
+    color: #cbd5e1;
+    margin-bottom: 0.8rem;
+  }
+
+  h3 {
+    font-size: 1.6rem; // Reduced from 1.8rem
+    color: #475569;
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    font-size: 1.2rem; // Reduced from 1.4rem
+    color: #94a3b8;
+    max-width: 40rem;
+  }
+
+  span {
+    font-size: 1.2rem;
+    color: #64748b;
+  }
 }
 
-.py-8 {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+.loading-state i {
+  color: #3b82f6;
+}
+
+:deep(.custom-table) {
+  .p-datatable-header {
+    background: #ffffff;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .p-column-title {
+    font-size: 1.1rem; // Reduced from 1.2rem
+    font-weight: 600;
+  }
+
+  .p-datatable-tbody > tr > td {
+    font-size: 1.1rem; // Reduced from 1.3rem
+    padding: 0.8rem 1.2rem;
+  }
+
+  .p-paginator {
+    background: #ffffff;
+    border-top: 0.1rem solid #e2e8f0;
+    padding: 0.6rem;
+    font-size: 1.1rem;
+  }
+}
+
+:deep(.p-tablist-tab-list) {
+  background: transparent;
+  border-bottom: 0.2rem solid #e2e8f0;
+}
+
+:deep(.p-tab) {
+  font-size: 1.2rem; // Reduced from 1.4rem
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+}
+
+:deep(.p-button) {
+  font-size: 1.2rem;
 }
 </style>
