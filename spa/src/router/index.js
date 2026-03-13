@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "../stores/auth";
 import Login from "../views/Login.vue";
+import Register from "../views/Register.vue";
 import Dashboard from "../views/Dashboard/Dashboard.vue";
 
 const router = createRouter({
@@ -14,6 +15,12 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: Login,
+      meta: { requiresAuth: false },
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: Register,
       meta: { requiresAuth: false },
     },
     {
@@ -65,7 +72,7 @@ router.beforeEach((to, from, next) => {
 
   if (to.meta.requiresAuth && !authStore.token) {
     next({ name: "unauthorized" });
-  } else if (to.path === "/login" && authStore.token) {
+  } else if ((to.path === "/login" || to.path === "/register") && authStore.token) {
     next("/dashboard");
   } else {
     next();

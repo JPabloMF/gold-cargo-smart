@@ -1,15 +1,9 @@
-import { Router } from "express";
-import { login } from "../controllers/authController.js";
-import { verifyToken } from "../middlewares/authMiddleware.js";
+import express from "express";
+import { login, register } from "../controllers/authController.js";
 
-const router = Router();
+const router = express.Router();
 
-// Public route
 router.post("/login", login);
-
-// Protected route (applying the middleware before the inline response)
-router.get("/secure-data", verifyToken, (req, res) => {
-  res.json({ message: `Welcome ${req.user.email}!` });
-});
+router.post("/register", register);
 
 export default router;

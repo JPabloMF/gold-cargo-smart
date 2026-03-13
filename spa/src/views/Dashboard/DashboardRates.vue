@@ -101,7 +101,9 @@ import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
 import { CONTINENTS } from '@/utils/constants';
+import { useAuthStore } from '@/stores/auth';
 
+const authStore = useAuthStore();
 const activeContinent = ref(CONTINENTS[0].value);
 const states = reactive({});
 const API_URL = import.meta.env.VITE_API_URL;
@@ -207,7 +209,10 @@ const saveData = async (continentValue) => {
   try {
     const response = await fetch(`${API_URL}/rates/${continentValue}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${authStore.token}`
+      },
       body: JSON.stringify({ data: states[continentValue].ratesData }),
     });
 
@@ -217,7 +222,7 @@ const saveData = async (continentValue) => {
       states[continentValue].hasChanges = false;
       alert(`Rates for ${CONTINENTS.find(c => c.value === continentValue)?.name} saved successfully.`);
     } else {
-      alert(`Failed to save: ${result.message}`);
+      alert(`Failed to save: ${result.message || 'Unauthorized or server error'}`);
     }
   } catch (error) {
     console.error("Save failed", error);

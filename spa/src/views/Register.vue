@@ -4,8 +4,9 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 
 // Component State
-const email = ref('admin@goldcargo.com'); 
-const password = ref('password123');
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
 const isLoading = ref(false);
 const errorMessage = ref('');
 
@@ -14,18 +15,21 @@ const router = useRouter();
 const authStore = useAuthStore();
 
 // Methods
-const handleLogin = async () => {
+const handleRegister = async () => {
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = 'Passwords do not match.';
+    return;
+  }
+
   isLoading.value = true;
   errorMessage.value = '';
   
-  // Call the Pinia action which hits your Node API
-  const result = await authStore.login(email.value, password.value);
+  const result = await authStore.register(email.value, password.value);
   
   if (result.success) {
-    // If the token is received and saved, push to the protected route
     router.push('/dashboard');
   } else {
-    errorMessage.value = result.message || 'Invalid credentials. Please check your email and password.';
+    errorMessage.value = result.message || 'Registration failed. Please try again.';
   }
   
   isLoading.value = false;
@@ -36,8 +40,9 @@ const handleLogin = async () => {
   <div class="login-wrapper">
     <div class="login-card">
       <h1>Gold Cargo Smart</h1>
+      <h2>Create Account</h2>
       
-      <form @submit.prevent="handleLogin">
+      <form @submit.prevent="handleRegister">
         <div class="input-group">
           <label for="email">Email Address</label>
           <input 
@@ -58,8 +63,18 @@ const handleLogin = async () => {
           />
         </div>
 
+        <div class="input-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input 
+            id="confirmPassword" 
+            v-model="confirmPassword" 
+            type="password" 
+            required 
+          />
+        </div>
+
         <button type="submit" :disabled="isLoading">
-          {{ isLoading ? 'Authenticating...' : 'Sign In' }}
+          {{ isLoading ? 'Creating Account...' : 'Register' }}
         </button>
 
         <p v-if="errorMessage" class="error-msg">
@@ -67,7 +82,7 @@ const handleLogin = async () => {
         </p>
 
         <p class="auth-link">
-          Don't have an account? <router-link to="/register">Register</router-link>
+          Already have an account? <router-link to="/login">Sign In</router-link>
         </p>
       </form>
     </div>
