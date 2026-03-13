@@ -28,7 +28,7 @@ const handleLogin = async () => {
   if (result.success) {
     router.push('/dashboard');
   } else {
-    errorMessage.value = result.message || 'Invalid credentials. Please check your email and password.';
+    errorMessage.value = result.message || 'Credenciales inválidas. Por favor verifique su correo y contraseña.';
   }
   
   isLoading.value = false;
@@ -40,33 +40,33 @@ const handleLogin = async () => {
     <Card class="auth-card">
       <template #header>
         <div class="auth-header">
-          <img src="/gold_cargo.png" alt="Gold Cargo Logo" class="auth-logo" />
+          <img src="/gold_cargo.png" alt="Logo de Gold Cargo" class="auth-logo" />
           <h1>Gold Cargo Smart</h1>
-          <p class="subtitle">Sign in to your account</p>
+          <p class="subtitle">Inicie sesión en su cuenta</p>
         </div>
       </template>
       <template #content>
         <form @submit.prevent="handleLogin" class="auth-form">
           <div class="field">
-            <label for="email">Email Address</label>
+            <label for="email">Correo Electrónico</label>
             <InputText 
               id="email" 
               v-model="email" 
               type="email" 
-              placeholder="Enter your email"
+              placeholder="Ingrese su correo"
               fluid
               required 
             />
           </div>
 
           <div class="field">
-            <label for="password">Password</label>
+            <label for="password">Contraseña</label>
             <Password 
               id="password" 
               v-model="password" 
               :feedback="false" 
               toggleMask 
-              placeholder="Enter your password"
+              placeholder="Ingrese su contraseña"
               fluid
               required 
             />
@@ -76,7 +76,7 @@ const handleLogin = async () => {
 
           <Button 
             type="submit" 
-            :label="isLoading ? 'Authenticating...' : 'Sign In'" 
+            :label="isLoading ? 'Autenticando...' : 'Iniciar Sesión'" 
             :loading="isLoading" 
             icon="pi pi-sign-in"
             fluid
@@ -84,8 +84,8 @@ const handleLogin = async () => {
 
           <div class="auth-footer">
             <p>
-              Don't have an account? 
-              <router-link to="/register" class="register-link">Register here</router-link>
+              ¿No tiene una cuenta? 
+              <router-link to="/register" class="register-link">Regístrese aquí</router-link>
             </p>
           </div>
         </form>

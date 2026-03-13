@@ -1,15 +1,15 @@
 <template>
   <div class="rates-management">
     <div class="header">
-      <h1>Rates Management</h1>
-      <p>Upload import/export rates from Excel files per continent</p>
+      <h1>Gestión de Tarifas</h1>
+      <p>Suba tarifas de importación/exportación desde archivos Excel por continente</p>
     </div>
 
     <Tabs :value="activeContinent" @update:value="onTabChange">
       <TabList>
         <Tab v-for="continent in CONTINENTS" :key="continent.value" :value="continent.value">
           <i :class="getContinentIcon(continent.value)" class="mr-2"></i>
-          {{ continent.name }}
+          {{ getSpanishContinentName(continent.value) }}
         </Tab>
       </TabList>
       <TabPanels>
@@ -17,8 +17,8 @@
           <div class="continent-content mt-3">
             <div class="upload-section card">
               <div class="upload-header">
-                <h3>Update {{ continent.name }} Rates</h3>
-                <p>Select an Excel file (.xlsx, .xls) to upload new data.</p>
+                <h3>Actualizar Tarifas de {{ getSpanishContinentName(continent.value) }}</h3>
+                <p>Seleccione un archivo Excel (.xlsx, .xls) para subir nuevos datos.</p>
               </div>
               
               <div class="flex items-center gap-3">
@@ -30,12 +30,12 @@
                   customUpload 
                   @select="(event) => onFileSelect(event, continent.value)" 
                   auto 
-                  chooseLabel="Select File"
+                  chooseLabel="Seleccionar Archivo"
                   class="p-button-outlined"
                 />
                 <Button 
                   v-if="states[continent.value]?.rawFileData" 
-                  label="Clear" 
+                  label="Limpiar" 
                   icon="pi pi-times" 
                   severity="secondary" 
                   variant="text"
@@ -45,25 +45,25 @@
               
               <div v-if="states[continent.value]?.fileName" class="selected-file">
                 <i class="pi pi-file-excel mr-2"></i>
-                <strong>Selected:</strong> {{ states[continent.value].fileName }}
+                <strong>Seleccionado:</strong> {{ states[continent.value].fileName }}
               </div>
             </div>
 
             <div v-if="states[continent.value]?.loading" class="loading-state card">
               <i class="pi pi-spin pi-spinner"></i>
-              <span>Processing data...</span>
+              <span>Procesando datos...</span>
             </div>
 
             <div v-else-if="states[continent.value]?.ratesData.length > 0" class="results-section mt-3">
               <div class="table-header card">
                 <div class="info">
-                  <h2>{{ continent.name }} Database</h2>
-                  <p>{{ states[continent.value].ratesData.length }} total rows found</p>
+                  <h2>Base de Datos de {{ getSpanishContinentName(continent.value) }}</h2>
+                  <p>{{ states[continent.value].ratesData.length }} filas totales encontradas</p>
                 </div>
                 <div class="actions">
                   <Button 
                     v-if="states[continent.value].hasChanges"
-                    label="Save Changes" 
+                    label="Guardar Cambios" 
                     icon="pi pi-save" 
                     severity="success" 
                     @click="saveData(continent.value)" 
@@ -86,13 +86,13 @@
             
             <div v-else-if="states[continent.value]?.fileName" class="no-data-state card">
               <i class="pi pi-exclamation-circle mb-2"></i>
-              <p>No valid data found in the selected file. Please check the Excel structure.</p>
+              <p>No se encontraron datos válidos en el archivo seleccionado. Por favor, verifique la estructura del Excel.</p>
             </div>
 
             <div v-else class="empty-state card">
               <i class="pi pi-cloud-upload mb-2"></i>
-              <h3>No rates stored for {{ continent.name }}</h3>
-              <p>Please upload an Excel file to populate the database for this continent.</p>
+              <h3>No hay tarifas almacenadas para {{ getSpanishContinentName(continent.value) }}</h3>
+              <p>Por favor, suba un archivo Excel para poblar la base de datos de este continente.</p>
             </div>
           </div>
         </TabPanel>
@@ -152,6 +152,16 @@ const getContinentIcon = (val) => {
     'oceania': 'pi pi-globe'
   };
   return icons[val] || 'pi pi-map';
+};
+
+const getSpanishContinentName = (val) => {
+  const names = {
+    'asia': 'Asia',
+    'america': 'América',
+    'europe': 'Europa',
+    'oceania': 'Oceanía'
+  };
+  return names[val] || val;
 };
 
 const fetchRates = async (continentValue) => {
@@ -243,13 +253,13 @@ const saveData = async (continentValue) => {
 
     if (result.success) {
       states[continentValue].hasChanges = false;
-      alert(`Rates for ${CONTINENTS.find(c => c.value === continentValue)?.name} saved successfully.`);
+      alert(`Tarifas de ${getSpanishContinentName(continentValue)} guardadas exitosamente.`);
     } else {
-      alert(`Failed to save: ${result.message || 'Unauthorized or server error'}`);
+      alert(`Error al guardar: ${result.message || 'Error de servidor o no autorizado'}`);
     }
   } catch (error) {
     console.error("Save failed", error);
-    alert("An error occurred while saving.");
+    alert("Ocurrió un error al guardar.");
   } finally {
     states[continentValue].loading = false;
   }
@@ -261,13 +271,13 @@ const saveData = async (continentValue) => {
   .header {
     margin-bottom: 2rem;
     h1 {
-      font-size: 1.8rem; // Reduced from 2.2rem
+      font-size: 1.8rem;
       font-weight: 700;
       color: #1e293b;
       margin-bottom: 0.3rem;
     }
     p {
-      font-size: 1.2rem; // Reduced from 1.4rem
+      font-size: 1.2rem;
       color: #64748b;
     }
   }
@@ -275,8 +285,8 @@ const saveData = async (continentValue) => {
 
 .card {
   background: #ffffff;
-  padding: 1.5rem; // Reduced from 1.8rem
-  border-radius: 0.8rem; // Reduced from 1rem
+  padding: 1.5rem;
+  border-radius: 0.8rem;
   box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.05);
   border: 0.1rem solid #e2e8f0;
 }
@@ -288,13 +298,13 @@ const saveData = async (continentValue) => {
 
   .upload-header {
     h3 {
-      font-size: 1.4rem; // Reduced from 1.6rem
+      font-size: 1.4rem;
       font-weight: 600;
       color: #334155;
       margin-bottom: 0.2rem;
     }
     p {
-      font-size: 1.1rem; // Reduced from 1.3rem
+      font-size: 1.1rem;
       color: #94a3b8;
     }
   }
@@ -302,7 +312,7 @@ const saveData = async (continentValue) => {
   .selected-file {
     display: flex;
     align-items: center;
-    font-size: 1.2rem; // Reduced from 1.3rem
+    font-size: 1.2rem;
     color: #10b981;
     background-color: #ecfdf5;
     padding: 0.6rem 1rem;
@@ -326,12 +336,12 @@ const saveData = async (continentValue) => {
 
   .info {
     h2 {
-      font-size: 1.6rem; // Reduced from 1.8rem
+      font-size: 1.6rem;
       font-weight: 600;
       color: #1e293b;
     }
     p {
-      font-size: 1.1rem; // Reduced from 1.2rem
+      font-size: 1.1rem;
       color: #64748b;
     }
   }
@@ -342,23 +352,23 @@ const saveData = async (continentValue) => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem 0; // Reduced from 5rem
+  padding: 3rem 0;
   text-align: center;
   
   i {
-    font-size: 2.8rem; // Reduced from 3.2rem
+    font-size: 2.8rem;
     color: #cbd5e1;
     margin-bottom: 0.8rem;
   }
 
   h3 {
-    font-size: 1.6rem; // Reduced from 1.8rem
+    font-size: 1.6rem;
     color: #475569;
     margin-bottom: 0.4rem;
   }
 
   p {
-    font-size: 1.2rem; // Reduced from 1.4rem
+    font-size: 1.2rem;
     color: #94a3b8;
     max-width: 40rem;
   }
@@ -380,12 +390,12 @@ const saveData = async (continentValue) => {
   }
 
   .p-column-title {
-    font-size: 1.1rem; // Reduced from 1.2rem
+    font-size: 1.1rem;
     font-weight: 600;
   }
 
   .p-datatable-tbody > tr > td {
-    font-size: 1.1rem; // Reduced from 1.3rem
+    font-size: 1.1rem;
     padding: 0.8rem 1.2rem;
   }
 
@@ -403,7 +413,7 @@ const saveData = async (continentValue) => {
 }
 
 :deep(.p-tab) {
-  font-size: 1.2rem; // Reduced from 1.4rem
+  font-size: 1.2rem;
   padding: 1rem 1.5rem;
   font-weight: 600;
 }

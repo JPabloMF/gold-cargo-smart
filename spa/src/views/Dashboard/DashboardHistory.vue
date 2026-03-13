@@ -11,17 +11,17 @@ const filters = ref({
 });
 
 const quotes = ref([
-  { id: '1001', date: '2026-03-10', customer: 'Global Logistics Inc', origin: 'China', destination: 'Colombia', type: 'FCL', status: 'Completed' },
-  { id: '1002', date: '2026-03-11', customer: 'Andes Trading', origin: 'USA', destination: 'Colombia', type: 'LCL', status: 'Pending' },
-  { id: '1003', date: '2026-03-12', customer: 'Ocean Blue Co', origin: 'Spain', destination: 'Colombia', type: 'FCL', status: 'Pending' },
-  { id: '1004', date: '2026-03-12', customer: 'Pacific Imports', origin: 'Vietnam', destination: 'Colombia', type: 'FCL', status: 'Cancelled' },
+  { id: '1001', date: '2026-03-10', customer: 'Global Logistics Inc', origin: 'China', destination: 'Colombia', type: 'FCL', status: 'Completada' },
+  { id: '1002', date: '2026-03-11', customer: 'Andes Trading', origin: 'USA', destination: 'Colombia', type: 'LCL', status: 'Pendiente' },
+  { id: '1003', date: '2026-03-12', customer: 'Ocean Blue Co', origin: 'España', destination: 'Colombia', type: 'FCL', status: 'Pendiente' },
+  { id: '1004', date: '2026-03-12', customer: 'Pacific Imports', origin: 'Vietnam', destination: 'Colombia', type: 'FCL', status: 'Cancelada' },
 ]);
 
 const getSeverity = (status) => {
   switch (status) {
-    case 'Completed': return 'success';
-    case 'Pending': return 'warn';
-    case 'Cancelled': return 'danger';
+    case 'Completada': return 'success';
+    case 'Pendiente': return 'warn';
+    case 'Cancelada': return 'danger';
     default: return null;
   }
 };
@@ -31,13 +31,13 @@ const getSeverity = (status) => {
   <div class="dashboard-history">
     <div class="header">
       <div class="info">
-        <h1>Quote History</h1>
-        <p>Review and manage all historical quotes requested through the system.</p>
+        <h1>Historial de Cotizaciones</h1>
+        <p>Revise y gestione todas las cotizaciones históricas solicitadas a través del sistema.</p>
       </div>
       <div class="actions">
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
-          <InputText v-model="filters.global.value" placeholder="Search quotes..." class="search-input" />
+          <InputText v-model="filters.global.value" placeholder="Buscar cotizaciones..." class="search-input" />
         </span>
       </div>
     </div>
@@ -53,17 +53,17 @@ const getSeverity = (status) => {
         class="custom-table"
       >
         <Column field="id" header="ID" sortable></Column>
-        <Column field="date" header="Date" sortable></Column>
-        <Column field="customer" header="Customer" sortable></Column>
-        <Column field="origin" header="Origin" sortable></Column>
-        <Column field="destination" header="Destination" sortable></Column>
-        <Column field="type" header="Load Type" sortable></Column>
-        <Column field="status" header="Status" sortable>
+        <Column field="date" header="Fecha" sortable></Column>
+        <Column field="customer" header="Cliente" sortable></Column>
+        <Column field="origin" header="Origen" sortable></Column>
+        <Column field="destination" header="Destino" sortable></Column>
+        <Column field="type" header="Tipo de Carga" sortable></Column>
+        <Column field="status" header="Estado" sortable>
           <template #body="slotProps">
             <Tag :value="slotProps.data.status" :severity="getSeverity(slotProps.data.status)" />
           </template>
         </Column>
-        <Column header="Actions">
+        <Column header="Acciones">
           <template #body>
             <Button icon="pi pi-eye" variant="text" severity="secondary" rounded />
           </template>
@@ -79,17 +79,17 @@ const getSeverity = (status) => {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 1.5rem; // Reduced from 2rem
+    margin-bottom: 1.5rem;
 
     .info {
       h1 {
-        font-size: 1.8rem; // Reduced from 2.2rem
+        font-size: 1.8rem;
         font-weight: 700;
         color: #1e293b;
         margin-bottom: 0.3rem;
       }
       p {
-        font-size: 1.2rem; // Reduced from 1.4rem
+        font-size: 1.2rem;
         color: #64748b;
       }
     }
@@ -98,16 +98,16 @@ const getSeverity = (status) => {
 
 .card {
   background: #ffffff;
-  border-radius: 0.8rem; // Reduced from 1rem
+  border-radius: 0.8rem;
   box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.05);
   border: 0.1rem solid #e2e8f0;
   overflow: hidden;
 }
 
 .search-input {
-  font-size: 1.2rem; // Reduced from 1.3rem
-  padding: 0.6rem 1rem 0.6rem 2.8rem; // Reduced padding
-  width: 22rem; // Reduced from 25rem
+  font-size: 1.2rem;
+  padding: 0.6rem 1rem 0.6rem 2.8rem;
+  width: 22rem;
 }
 
 :deep(.p-input-icon-left i) {
@@ -119,20 +119,20 @@ const getSeverity = (status) => {
 :deep(.custom-table) {
   .p-datatable-thead > tr > th {
     background: #f8fafc;
-    font-size: 1.1rem; // Reduced from 1.2rem
+    font-size: 1.1rem;
     font-weight: 700;
     color: #475569;
-    padding: 0.8rem 1.2rem; // Reduced padding
+    padding: 0.8rem 1.2rem;
   }
 
   .p-datatable-tbody > tr > td {
-    font-size: 1.2rem; // Reduced from 1.3rem
-    padding: 0.8rem 1.2rem; // Reduced padding
+    font-size: 1.2rem;
+    padding: 0.8rem 1.2rem;
     color: #334155;
   }
 
   .p-tag {
-    font-size: 0.9rem; // Reduced from 1rem
+    font-size: 0.9rem;
     padding: 0.15rem 0.5rem;
     font-weight: 700;
     text-transform: uppercase;

@@ -22,7 +22,7 @@ const authStore = useAuthStore();
 // Methods
 const handleRegister = async () => {
   if (password.value !== confirmPassword.value) {
-    errorMessage.value = 'Passwords do not match.';
+    errorMessage.value = 'Las contraseñas no coinciden.';
     return;
   }
 
@@ -34,7 +34,7 @@ const handleRegister = async () => {
   if (result.success) {
     router.push('/dashboard');
   } else {
-    errorMessage.value = result.message || 'Registration failed. Please try again.';
+    errorMessage.value = result.message || 'Registro fallido. Por favor intente de nuevo.';
   }
   
   isLoading.value = false;
@@ -46,54 +46,54 @@ const handleRegister = async () => {
     <Card class="auth-card">
       <template #header>
         <div class="auth-header">
-          <img src="/gold_cargo.png" alt="Gold Cargo Logo" class="auth-logo" />
+          <img src="/gold_cargo.png" alt="Logo de Gold Cargo" class="auth-logo" />
           <h1>Gold Cargo Smart</h1>
-          <p class="subtitle">Create your account</p>
+          <p class="subtitle">Cree su cuenta</p>
         </div>
       </template>
       <template #content>
         <form @submit.prevent="handleRegister" class="auth-form">
           <div class="field">
-            <label for="email">Email Address</label>
+            <label for="email">Correo Electrónico</label>
             <InputText 
               id="email" 
               v-model="email" 
               type="email" 
-              placeholder="Enter your email"
+              placeholder="Ingrese su correo"
               fluid
               required 
             />
           </div>
 
           <div class="field">
-            <label for="password">Password</label>
+            <label for="password">Contraseña</label>
             <Password 
               id="password" 
               v-model="password" 
               toggleMask 
-              placeholder="Create a password"
+              placeholder="Cree una contraseña"
               fluid
               required 
             >
               <template #footer>
                 <ul class="password-hints">
-                  <li>At least one lowercase</li>
-                  <li>At least one uppercase</li>
-                  <li>At least one numeric</li>
-                  <li>Minimum 8 characters</li>
+                  <li>Al menos una minúscula</li>
+                  <li>Al menos una mayúscula</li>
+                  <li>Al menos un número</li>
+                  <li>Mínimo 8 caracteres</li>
                 </ul>
               </template>
             </Password>
           </div>
 
           <div class="field">
-            <label for="confirmPassword">Confirm Password</label>
+            <label for="confirmPassword">Confirmar Contraseña</label>
             <Password 
               id="confirmPassword" 
               v-model="confirmPassword" 
               :feedback="false" 
               toggleMask 
-              placeholder="Confirm your password"
+              placeholder="Confirme su contraseña"
               fluid
               required 
             />
@@ -103,7 +103,7 @@ const handleRegister = async () => {
 
           <Button 
             type="submit" 
-            :label="isLoading ? 'Creating Account...' : 'Register'" 
+            :label="isLoading ? 'Creando Cuenta...' : 'Registrarse'" 
             :loading="isLoading" 
             icon="pi pi-user-plus"
             fluid
@@ -111,8 +111,8 @@ const handleRegister = async () => {
 
           <div class="auth-footer">
             <p>
-              Already have an account? 
-              <router-link to="/login" class="login-link">Sign In here</router-link>
+              ¿Ya tiene una cuenta? 
+              <router-link to="/login" class="login-link">Inicie sesión aquí</router-link>
             </p>
           </div>
         </form>

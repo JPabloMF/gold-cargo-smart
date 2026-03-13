@@ -15,9 +15,9 @@ const handleLogout = () => {
 };
 
 const menuItems = [
-  { label: 'Overview', icon: 'pi pi-home', to: '/dashboard' },
-  { label: 'Quote History', icon: 'pi pi-history', to: '/dashboard/history' },
-  { label: 'Rates Management', icon: 'pi pi-file-excel', to: '/dashboard/rates' }
+  { label: 'Resumen', icon: 'pi pi-home', to: '/dashboard' },
+  { label: 'Historial de Cotizaciones', icon: 'pi pi-history', to: '/dashboard/history' },
+  { label: 'Gestión de Tarifas', icon: 'pi pi-file-excel', to: '/dashboard/rates' }
 ];
 
 const closeMobileMenu = () => {
@@ -55,7 +55,7 @@ const closeMobileMenu = () => {
         </div>
         <Button 
           icon="pi pi-power-off" 
-          label="Logout" 
+          label="Cerrar Sesión" 
           severity="danger" 
           variant="text" 
           class="logout-btn" 
@@ -75,7 +75,7 @@ const closeMobileMenu = () => {
       <div class="spacer"></div>
     </div>
 
-    <Drawer v-model:visible="mobileMenuVisible" header="Menu" class="mobile-drawer">
+    <Drawer v-model:visible="mobileMenuVisible" header="Menú" class="mobile-drawer">
       <template #header>
         <div class="brand-drawer">
           <img src="/gold_cargo.png" alt="Logo" class="sidebar-logo" />
@@ -106,7 +106,7 @@ const closeMobileMenu = () => {
           </div>
           <Button 
             icon="pi pi-power-off" 
-            label="Logout" 
+            label="Cerrar Sesión" 
             severity="danger" 
             variant="text" 
             class="logout-btn" 
@@ -154,7 +154,7 @@ const closeMobileMenu = () => {
     padding: 0.8rem 1rem;
     color: #64748b;
     text-decoration: none;
-    font-size: 1.2rem; // Reduced from 1.3rem
+    font-size: 1.2rem;
     font-weight: 600;
     border-radius: 0.5rem;
     transition: all 0.2s ease;
@@ -186,7 +186,7 @@ const closeMobileMenu = () => {
     align-items: center;
     gap: 0.6rem;
     color: #475569;
-    font-size: 1.1rem; // Reduced from 1.2rem
+    font-size: 1.1rem;
     i { font-size: 1.1rem; }
     .email {
       white-space: nowrap;
@@ -199,7 +199,7 @@ const closeMobileMenu = () => {
 
 // Desktop Specific
 .sidebar {
-  width: 20rem; // Reduced from 24rem
+  width: 20rem;
   height: 100vh;
   background-color: #ffffff;
   border-right: 0.1rem solid #e2e8f0;
@@ -255,7 +255,7 @@ const closeMobileMenu = () => {
 .content-area {
   flex: 1;
   overflow-y: auto;
-  padding: 2rem; // Reduced from 2.5rem
+  padding: 2rem;
   background-color: #f8fafc;
 
   @media (max-width: 640px) {
