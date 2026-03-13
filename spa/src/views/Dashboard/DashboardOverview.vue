@@ -2,10 +2,10 @@
 import Card from 'primevue/card';
 
 const stats = [
-  { label: 'Total Cotizaciones', value: '124', icon: 'pi pi-file-edit', color: '#3b82f6', bg: '#eff6ff' },
-  { label: 'Pendientes', value: '12', icon: 'pi pi-clock', color: '#f59e0b', bg: '#fffbeb' },
-  { label: 'Completadas', value: '108', icon: 'pi pi-check-circle', color: '#10b981', bg: '#ecfdf5' },
-  { label: 'Tarifas Activas', value: '4 Continentes', icon: 'pi pi-globe', color: '#8b5cf6', bg: '#f5f3ff' }
+  { label: 'Total Cotizaciones', value: '124', icon: 'file-pen', color: '#3b82f6', bg: '#eff6ff' },
+  { label: 'Pendientes', value: '12', icon: 'clock', color: '#f59e0b', bg: '#fffbeb' },
+  { label: 'Completadas', value: '108', icon: 'check-circle', color: '#10b981', bg: '#ecfdf5' },
+  { label: 'Tarifas Activas', value: '4 Continentes', icon: 'globe', color: '#8b5cf6', bg: '#f5f3ff' }
 ];
 </script>
 
@@ -21,7 +21,7 @@ const stats = [
         <template #content>
           <div class="stat-content">
             <div class="stat-icon" :style="{ color: stat.color, backgroundColor: stat.bg }">
-              <i :class="stat.icon"></i>
+              <font-awesome-icon :icon="['fas', getIconName(stat.icon)]" />
             </div>
             <div class="stat-info">
               <span class="label">{{ stat.label }}</span>
@@ -36,13 +36,13 @@ const stats = [
       <Card>
         <template #title>
           <div class="flex items-center gap-2">
-            <i class="pi pi-chart-line text-blue-500 text-lg"></i>
+            <font-awesome-icon icon="chart-line" class="text-blue-500 text-lg" />
             <span class="text-lg font-bold">Estado del Sistema</span>
           </div>
         </template>
         <template #content>
           <div class="status-placeholder">
-            <i class="pi pi-shield-check text-green-500 mb-2"></i>
+            <font-awesome-icon icon="check-circle" class="text-green-500 mb-2 status-icon" />
             <h3>Todos los Servicios Operativos</h3>
             <p>Los sistemas de Base de Datos y Gestión de Tarifas están funcionando normalmente.</p>
           </div>
@@ -51,6 +51,23 @@ const stats = [
     </div>
   </div>
 </template>
+
+<script>
+// Helper to map old prime icons to fontawesome icons if they differ
+export default {
+  methods: {
+    getIconName(icon) {
+      const mapping = {
+        'file-edit': 'file-edit', // Note: I need to ensure faFileEdit is in the library
+        'clock': 'clock-rotate-left',
+        'check-circle': 'check-circle',
+        'globe': 'globe'
+      };
+      return mapping[icon] || icon;
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .dashboard-overview {
@@ -93,10 +110,7 @@ const stats = [
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    i {
-      font-size: 1.8rem;
-    }
+    font-size: 1.8rem;
   }
 
   .stat-info {
@@ -125,7 +139,7 @@ const stats = [
   padding: 3rem 0;
   text-align: center;
 
-  i {
+  .status-icon {
     font-size: 3rem;
   }
 

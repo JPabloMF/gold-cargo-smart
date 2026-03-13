@@ -15,9 +15,9 @@ const handleLogout = () => {
 };
 
 const menuItems = [
-  { label: 'Resumen', icon: 'pi pi-home', to: '/dashboard' },
-  { label: 'Historial de Cotizaciones', icon: 'pi pi-history', to: '/dashboard/history' },
-  { label: 'Gestión de Tarifas', icon: 'pi pi-file-excel', to: '/dashboard/rates' }
+  { label: 'Resumen', icon: 'house', to: '/dashboard' },
+  { label: 'Historial de Cotizaciones', icon: 'clock-rotate-left', to: '/dashboard/history' },
+  { label: 'Gestión de Tarifas', icon: 'file-excel', to: '/dashboard/rates' }
 ];
 
 const closeMobileMenu = () => {
@@ -43,31 +43,34 @@ const closeMobileMenu = () => {
           active-class="active"
           exact-active-class="exact-active"
         >
-          <i :class="item.icon"></i>
+          <font-awesome-icon :icon="['fas', item.icon]" class="nav-icon" />
           <span>{{ item.label }}</span>
         </router-link>
       </nav>
 
       <div class="sidebar-footer">
         <div class="user-info">
-          <i class="pi pi-user"></i>
+          <font-awesome-icon icon="user" class="footer-icon" />
           <span class="email" :title="authStore.user?.email">{{ authStore.user?.email }}</span>
         </div>
         <Button 
-          icon="pi pi-power-off" 
-          label="Cerrar Sesión" 
           severity="danger" 
           variant="text" 
           class="logout-btn" 
           @click="handleLogout" 
           fluid
-        />
+        >
+          <font-awesome-icon icon="power-off" class="mr-3" />
+          <span>Cerrar Sesión</span>
+        </Button>
       </div>
     </aside>
 
     <!-- Mobile Header & Drawer -->
     <div class="mobile-header mobile-only">
-      <Button icon="pi pi-bars" @click="mobileMenuVisible = true" variant="text" severity="secondary" />
+      <Button @click="mobileMenuVisible = true" variant="text" severity="secondary">
+        <font-awesome-icon icon="bars" />
+      </Button>
       <div class="mobile-brand">
         <img src="/gold_cargo.png" alt="Logo" class="mobile-logo" />
         <span>Gold Cargo</span>
@@ -93,7 +96,7 @@ const closeMobileMenu = () => {
           exact-active-class="exact-active"
           @click="closeMobileMenu"
         >
-          <i :class="item.icon"></i>
+          <font-awesome-icon :icon="['fas', item.icon]" class="nav-icon" />
           <span>{{ item.label }}</span>
         </router-link>
       </nav>
@@ -101,18 +104,19 @@ const closeMobileMenu = () => {
       <template #footer>
         <div class="sidebar-footer">
           <div class="user-info">
-            <i class="pi pi-user"></i>
+            <font-awesome-icon icon="user" class="footer-icon" />
             <span class="email">{{ authStore.user?.email }}</span>
           </div>
           <Button 
-            icon="pi pi-power-off" 
-            label="Cerrar Sesión" 
             severity="danger" 
             variant="text" 
             class="logout-btn" 
             @click="handleLogout" 
             fluid
-          />
+          >
+            <font-awesome-icon icon="power-off" class="mr-3" />
+            <span>Cerrar Sesión</span>
+          </Button>
         </div>
       </template>
     </Drawer>
@@ -159,7 +163,11 @@ const closeMobileMenu = () => {
     border-radius: 0.5rem;
     transition: all 0.2s ease;
 
-    i { font-size: 1.4rem; }
+    .nav-icon {
+      font-size: 1.4rem;
+      width: 1.8rem;
+      text-align: center;
+    }
 
     &:hover {
       background-color: #f8fafc;
@@ -169,7 +177,7 @@ const closeMobileMenu = () => {
     &.active, &.exact-active {
       background-color: #eff6ff;
       color: #2563eb;
-      i { color: #2563eb; }
+      .nav-icon { color: #2563eb; }
     }
   }
 }
@@ -187,14 +195,30 @@ const closeMobileMenu = () => {
     gap: 0.6rem;
     color: #475569;
     font-size: 1.1rem;
-    i { font-size: 1.1rem; }
+    
+    .footer-icon {
+      font-size: 1.1rem;
+      width: 1.4rem;
+    }
+
     .email {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
   }
-  .logout-btn { font-size: 1.1rem; font-weight: 600; padding: 0.6rem; }
+  .logout-btn { 
+    font-size: 1.1rem; 
+    font-weight: 600; 
+    padding: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
+.mr-3 {
+  margin-right: 0.8rem;
 }
 
 // Desktop Specific
@@ -289,6 +313,6 @@ const closeMobileMenu = () => {
 .nav-item[href="/dashboard"].active:not(.exact-active) {
   background-color: transparent;
   color: #64748b;
-  i { color: #64748b; }
+  .nav-icon { color: #64748b; }
 }
 </style>

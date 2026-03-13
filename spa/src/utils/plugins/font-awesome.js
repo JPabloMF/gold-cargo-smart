@@ -1,9 +1,55 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faShip, faBoxesStacked, faTruck, faTruckRampBox, faWeightHanging, faRulerVertical } from "@fortawesome/free-solid-svg-icons";
+import {
+  faShip,
+  faBoxesStacked,
+  faTruck,
+  faTruckRampBox,
+  faWeightHanging,
+  faRulerVertical,
+  faHouse,
+  faClockRotateLeft,
+  faFileExcel,
+  faUser,
+  faPowerOff,
+  faBars,
+  faGlobe,
+  faChartLine,
+  faCheckCircle,
+  faEye,
+  faMagnifyingGlass,
+  faFloppyDisk,
+  faXmark,
+  faTriangleExclamation,
+  faCloudArrowUp,
+  faFilePen,
+} from "@fortawesome/free-solid-svg-icons";
 import { faMap } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faShip, faBoxesStacked, faTruck, faTruckRampBox, faWeightHanging, faRulerVertical, faMap);
+library.add(
+  faShip,
+  faBoxesStacked,
+  faTruck,
+  faTruckRampBox,
+  faWeightHanging,
+  faRulerVertical,
+  faMap,
+  faHouse,
+  faClockRotateLeft,
+  faFileExcel,
+  faUser,
+  faPowerOff,
+  faBars,
+  faGlobe,
+  faChartLine,
+  faCheckCircle,
+  faEye,
+  faMagnifyingGlass,
+  faFloppyDisk,
+  faXmark,
+  faTriangleExclamation,
+  faCloudArrowUp,
+  faFilePen,
+);
 
 export { FontAwesomeIcon };
-
