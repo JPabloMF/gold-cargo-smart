@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
 import rateRoutes from "./routes/rateRoutes.js";
+import incomeRoutes from "./routes/incomeRoutes.js";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use(express.json({ limit: "50mb" })); // Increase limit for large Excel file
 // Mount the routes
 app.use("/api/auth", authRoutes);
 app.use("/api/rates", rateRoutes);
+app.use("/api/income", incomeRoutes);
 
 app.listen(PORT, () =>
   console.log(`🚀 Services backend running on http://localhost:${PORT}`)

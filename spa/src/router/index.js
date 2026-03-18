@@ -56,6 +56,11 @@ const router = createRouter({
           name: "dashboard-rates",
           component: () => import("../views/Dashboard/DashboardRates.vue"),
         },
+        {
+          path: "income",
+          name: "dashboard-income",
+          component: () => import("../views/Dashboard/DashboardIncome.vue"),
+        },
       ],
     },
     {

@@ -22,6 +22,10 @@ import {
   faTriangleExclamation,
   faCloudArrowUp,
   faFilePen,
+  faHandHoldingDollar,
+  faFileCircleCheck,
+  faWallet,
+  faCoins,
 } from "@fortawesome/free-solid-svg-icons";
 import { faMap } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -50,6 +54,10 @@ library.add(
   faTriangleExclamation,
   faCloudArrowUp,
   faFilePen,
+  faHandHoldingDollar,
+  faFileCircleCheck,
+  faWallet,
+  faCoins,
 );
 
 export { FontAwesomeIcon };

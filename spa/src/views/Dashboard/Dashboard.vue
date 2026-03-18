@@ -17,7 +17,8 @@ const handleLogout = () => {
 const menuItems = [
   { label: 'Resumen', icon: 'house', to: '/dashboard' },
   { label: 'Historial de Cotizaciones', icon: 'clock-rotate-left', to: '/dashboard/history' },
-  { label: 'Gestión de Tarifas', icon: 'file-excel', to: '/dashboard/rates' }
+  { label: 'Gestión de Tarifas', icon: 'file-excel', to: '/dashboard/rates' },
+  { label: 'Ingresos', icon: 'hand-holding-dollar', to: '/dashboard/income' }
 ];
 
 const closeMobileMenu = () => {
