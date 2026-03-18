@@ -77,6 +77,7 @@ import FloatLabel from "primevue/floatlabel";
 import { ref, onMounted } from "vue";
 import { useQuoteStore } from "@/stores/quote";
 import { COUNTRIES, LOAD_TYPES, DESTINATION_PORTS } from "@/utils/constants";
+import { apiFetch } from "@/utils/api";
 
 const store = useQuoteStore();
 const loadTypes = LOAD_TYPES;
@@ -95,7 +96,7 @@ const flagByCountry = Object.fromEntries([
 
 onMounted(async () => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/rates`);
+    const response = await apiFetch(`${import.meta.env.VITE_API_URL}/rates`);
     const result = await response.json();
     if (result.success) {
       const seen = new Set();

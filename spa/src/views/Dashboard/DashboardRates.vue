@@ -115,6 +115,7 @@ import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
 import { CONTINENTS } from '@/utils/constants';
 import { useAuthStore } from '@/stores/auth';
+import { apiFetch } from '@/utils/api';
 
 const authStore = useAuthStore();
 const activeContinent = ref(CONTINENTS[0].value);
@@ -167,7 +168,7 @@ const getSpanishContinentName = (val) => {
 const fetchRates = async (continentValue) => {
   states[continentValue].loading = true;
   try {
-    const response = await fetch(`${API_URL}/rates/${continentValue}`);
+    const response = await apiFetch(`${API_URL}/rates/${continentValue}`);
     const result = await response.json();
     
     if (result.success && result.data.length > 0) {
@@ -240,9 +241,9 @@ const clearFile = (continentValue) => {
 const saveData = async (continentValue) => {
   states[continentValue].loading = true;
   try {
-    const response = await fetch(`${API_URL}/rates/${continentValue}`, {
+    const response = await apiFetch(`${API_URL}/rates/${continentValue}`, {
       method: "POST",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${authStore.token}`
       },
