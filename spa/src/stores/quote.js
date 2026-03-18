@@ -5,8 +5,8 @@ export const useQuoteStore = defineStore("quote", () => {
   const fleteChecked = ref(true);
   const aduanaChecked = ref(false);
   const terresteChecked = ref(false);
-  const selectedOriginCountry = ref(null);
-  const selectedDestinationCountry = ref(null);
+  const selectedOriginPort = ref(null);
+  const selectedDestinationPort = ref(null);
   const selectedLoadType = ref(null);
   const selectedContainerType = ref(null);
   const weight = ref("");
@@ -27,17 +27,17 @@ export const useQuoteStore = defineStore("quote", () => {
       summaryData.push({ field: "Servicios", value: services.join(", ") });
     }
 
-    if (selectedOriginCountry.value) {
+    if (selectedOriginPort.value) {
       summaryData.push({
         field: "Origen",
-        value: `${selectedOriginCountry.value.flag} ${selectedOriginCountry.value.name}`,
+        value: selectedOriginPort.value,
       });
     }
 
-    if (selectedDestinationCountry.value) {
+    if (selectedDestinationPort.value) {
       summaryData.push({
         field: "Destino",
-        value: `${selectedDestinationCountry.value.flag} ${selectedDestinationCountry.value.name}`,
+        value: selectedDestinationPort.value.name,
       });
     }
 
@@ -95,8 +95,8 @@ export const useQuoteStore = defineStore("quote", () => {
     fleteChecked,
     aduanaChecked,
     terresteChecked,
-    selectedOriginCountry,
-    selectedDestinationCountry,
+    selectedOriginPort,
+    selectedDestinationPort,
     selectedLoadType,
     selectedContainerType,
     weight,

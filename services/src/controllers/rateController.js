@@ -1,5 +1,17 @@
 import Rate from "../models/Rate.js";
 
+export const getAllRates = async (req, res) => {
+  try {
+    console.log("[Rates] Fetching all rates");
+    const rates = await Rate.find({});
+    console.log(`[Rates] All rates fetched successfully (${rates.length} continents)`);
+    res.json({ success: true, data: rates });
+  } catch (error) {
+    console.error("[Rates] Error fetching all rates:", error);
+    res.status(500).json({ success: false, message: "Error fetching rates", error: error.message });
+  }
+};
+
 export const getRatesByContinent = async (req, res) => {
   try {
     const { continent } = req.params;

@@ -1985,6 +1985,12 @@ export const COUNTRIES = [
   },
 ];
 
+export const DESTINATION_PORTS = [
+  { name: "CTG - Cartagena", value: "CTG" },
+  { name: "BUN - Buenaventura", value: "BUN" },
+  { name: "BAQ - Barranquilla", value: "BAQ" },
+];
+
 export const LOAD_TYPES = [
   { name: "LCL", value: "lcl" },
   { name: "FCL", value: "fcl" },
