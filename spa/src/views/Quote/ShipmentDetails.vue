@@ -20,7 +20,7 @@
             </div>
           </template>
           <template #option="slotProps">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 text-base">
               <p>{{ slotProps.option.flag }}</p>
               <div>{{ slotProps.option.name }}</div>
             </div>
@@ -47,7 +47,7 @@
             </div>
           </template>
           <template #option="slotProps">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 text-base">
               <p>{{ slotProps.option.flag }}</p>
               <div>{{ slotProps.option.name }}</div>
             </div>
@@ -66,6 +66,11 @@
           optionLabel="name"
           class="w-full"
         >
+          <template #option="slotProps">
+            <div class="flex items-center gap-2 text-base">
+              <div>{{ slotProps.option.name }}</div>
+            </div>
+          </template>
           <template #dropdownicon>
             <font-awesome-icon icon="fa-solid fa-truck-ramp-box" />
           </template>
