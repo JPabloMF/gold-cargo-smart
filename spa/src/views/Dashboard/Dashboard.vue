@@ -157,7 +157,7 @@ const closeMobileMenu = () => {
     align-items: center;
     gap: 1rem;
     padding: 0.8rem 1rem;
-    color: #64748b;
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 600;
@@ -171,21 +171,21 @@ const closeMobileMenu = () => {
     }
 
     &:hover {
-      background-color: #f8fafc;
-      color: #3b82f6;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
     }
 
     &.active, &.exact-active {
-      background-color: #eff6ff;
-      color: #2563eb;
-      .nav-icon { color: #2563eb; }
+      background-color: #ECBF26;
+      color: #2C3D69;
+      .nav-icon { color: #2C3D69; }
     }
   }
 }
 
 .sidebar-footer {
   padding: 1.2rem;
-  border-top: 0.1rem solid #f1f5f9;
+  border-top: 0.1rem solid rgba(255, 255, 255, 0.12);
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -194,9 +194,9 @@ const closeMobileMenu = () => {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    color: #475569;
+    color: rgba(255, 255, 255, 0.6);
     font-size: 1.1rem;
-    
+
     .footer-icon {
       font-size: 1.1rem;
       width: 1.4rem;
@@ -208,13 +208,19 @@ const closeMobileMenu = () => {
       text-overflow: ellipsis;
     }
   }
-  .logout-btn { 
-    font-size: 1.1rem; 
-    font-weight: 600; 
+  .logout-btn {
+    font-size: 1.1rem;
+    font-weight: 600;
     padding: 0.6rem;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    color: rgba(255, 255, 255, 0.7) !important;
+
+    &:hover {
+      color: #ff6b6b !important;
+      background-color: rgba(255, 107, 107, 0.1) !important;
+    }
   }
 }
 
@@ -226,12 +232,12 @@ const closeMobileMenu = () => {
 .sidebar {
   width: 20rem;
   height: 100vh;
-  background-color: #ffffff;
-  border-right: 0.1rem solid #e2e8f0;
+  background-color: #2C3D69;
+  border-right: none;
   display: flex;
   flex-direction: column;
   padding: 1.2rem 0;
-  box-shadow: 0.4rem 0 1rem rgba(0, 0, 0, 0.02);
+  box-shadow: 0.4rem 0 1.5rem rgba(44, 61, 105, 0.3);
 
   .brand {
     padding: 0 1.2rem;
@@ -241,7 +247,14 @@ const closeMobileMenu = () => {
     gap: 0.8rem;
 
     .sidebar-logo { width: 2.8rem; height: auto; }
-    h2 { margin: 0; font-size: 1.6rem; font-weight: 700; color: #1e293b; }
+    h2 {
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ECBF26;
+      font-family: 'Russo One', sans-serif;
+      letter-spacing: 0.05em;
+    }
   }
 }
 
@@ -249,10 +262,15 @@ const closeMobileMenu = () => {
 .mobile-header {
   display: flex;
   align-items: center;
-  background-color: #ffffff;
+  background-color: #2C3D69;
   padding: 0.6rem 1.2rem;
-  border-bottom: 0.1rem solid #e2e8f0;
+  border-bottom: none;
   gap: 0.8rem;
+
+  :deep(.p-button) {
+    color: rgba(255, 255, 255, 0.8) !important;
+    &:hover { background-color: rgba(255, 255, 255, 0.1) !important; }
+  }
 
   .mobile-brand {
     display: flex;
@@ -260,7 +278,8 @@ const closeMobileMenu = () => {
     gap: 0.6rem;
     font-weight: 700;
     font-size: 1.4rem;
-    color: #1e293b;
+    color: #ECBF26;
+    font-family: 'Russo One', sans-serif;
 
     .mobile-logo { width: 2rem; height: auto; }
   }
@@ -273,7 +292,8 @@ const closeMobileMenu = () => {
   gap: 0.8rem;
   font-weight: 700;
   font-size: 1.4rem;
-  color: #1e293b;
+  color: #2C3D69;
+  font-family: 'Russo One', sans-serif;
   .sidebar-logo { width: 2.4rem; height: auto; }
 }
 
@@ -313,7 +333,7 @@ const closeMobileMenu = () => {
 // Global active class fix for the "Overview" link
 .nav-item[href="/dashboard"].active:not(.exact-active) {
   background-color: transparent;
-  color: #64748b;
-  .nav-icon { color: #64748b; }
+  color: rgba(255, 255, 255, 0.7);
+  .nav-icon { color: rgba(255, 255, 255, 0.7); }
 }
 </style>

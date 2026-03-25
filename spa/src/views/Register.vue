@@ -127,7 +127,7 @@ const handleRegister = async () => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f8f9fa;
+  background: linear-gradient(145deg, #2C3D69 0%, #3a4f87 60%, #2C3D69 100%);
   padding: 1rem;
 }
 
@@ -155,8 +155,10 @@ const handleRegister = async () => {
   h1 {
     margin: 0;
     font-size: 2rem;
-    color: #1e293b;
+    color: #2C3D69;
     font-weight: 700;
+    font-family: 'Russo One', sans-serif;
+    letter-spacing: 0.04em;
   }
 
   .subtitle {
@@ -179,7 +181,7 @@ const handleRegister = async () => {
 
     label {
       font-weight: 600;
-      color: #334155;
+      color: #2C3D69;
       font-size: 1.2rem;
     }
   }
@@ -201,13 +203,13 @@ const handleRegister = async () => {
   color: #64748b;
 
   .login-link {
-    color: #3b82f6;
+    color: #ECBF26;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.2s;
 
     &:hover {
-      color: #2563eb;
+      color: #d4a91f;
       text-decoration: underline;
     }
   }

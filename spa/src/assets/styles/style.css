@@ -1,6 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Quicksand:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
+
+/* ── GoldCargo Brand Theme Tokens ── */
+@theme {
+  --color-brand-navy:  #2C3D69;
+  --color-brand-gold:  #ECBF26;
+  --color-brand-yellow: #FFCF25;
+  --color-brand-light: #FFFF90;
+  --font-brand: 'Russo One', sans-serif;
+  --font-sans:  'Quicksand', sans-serif;
+}
+
+/* ── PrimeVue primary color override (navy) ── */
+:root {
+  --p-primary-50:  #eef1f8;
+  --p-primary-100: #d5dcee;
+  --p-primary-200: #aab9dd;
+  --p-primary-300: #7f96cc;
+  --p-primary-400: #5473bb;
+  --p-primary-500: #2C3D69;
+  --p-primary-600: #263560;
+  --p-primary-700: #1f2d52;
+  --p-primary-800: #182445;
+  --p-primary-900: #111c37;
+  --p-primary-950: #0b132a;
+  --p-primary-color: #2C3D69;
+  --p-primary-contrast-color: #ffffff;
+}
 
 body {
   background-color: #F1F5F9;
   font-size: 10px;
+  font-family: 'Quicksand', sans-serif;
 }
