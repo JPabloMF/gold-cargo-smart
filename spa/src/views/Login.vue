@@ -41,7 +41,6 @@ const handleLogin = async () => {
       <template #header>
         <div class="auth-header">
           <img src="/gold_cargo.png" alt="Logo de Gold Cargo" class="auth-logo" />
-          <h1>Gold Cargo Smart</h1>
           <p class="subtitle">Inicie sesión en su cuenta</p>
         </div>
       </template>
@@ -120,7 +119,7 @@ const handleLogin = async () => {
   align-items: center;
 
   .auth-logo {
-    width: 8rem;
+    width: 15rem;
     height: auto;
     margin-bottom: 1rem;
   }

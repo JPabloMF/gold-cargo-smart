@@ -32,7 +32,6 @@ const closeMobileMenu = () => {
     <aside class="sidebar desktop-only">
       <div class="brand">
         <img src="/gold_cargo.png" alt="Logo" class="sidebar-logo" />
-        <h2>Gold Cargo</h2>
       </div>
       
       <nav class="nav-links flex-grow">
@@ -83,7 +82,6 @@ const closeMobileMenu = () => {
       <template #header>
         <div class="brand-drawer">
           <img src="/gold_cargo.png" alt="Logo" class="sidebar-logo" />
-          <span>Gold Cargo</span>
         </div>
       </template>
       
@@ -244,9 +242,10 @@ const closeMobileMenu = () => {
     margin-bottom: 2.5rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.8rem;
 
-    .sidebar-logo { width: 2.8rem; height: auto; }
+    .sidebar-logo { width: 5.8rem; height: auto; }
     h2 {
       margin: 0;
       font-size: 1.6rem;
