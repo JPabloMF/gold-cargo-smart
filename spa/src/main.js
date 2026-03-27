@@ -9,6 +9,27 @@ import Aura from "@primeuix/themes/aura";
 import { definePreset } from "@primeuix/themes";
 
 const GoldCargoPreset = definePreset(Aura, {
+  components: {
+    button: {
+      colorScheme: {
+        light: {
+          root: {
+            primary: {
+              background: '#ECBF26',
+              borderColor: '#ECBF26',
+              color: '#2C3D69',
+              hoverBackground: '#d4a91f',
+              hoverBorderColor: '#d4a91f',
+              hoverColor: '#2C3D69',
+              activeBackground: '#b8911a',
+              activeBorderColor: '#b8911a',
+              activeColor: '#2C3D69',
+            },
+          },
+        },
+      },
+    },
+  },
   semantic: {
     primary: {
       50:  '{indigo.50}',
