@@ -81,7 +81,6 @@
         <Button
           label="Guardar Ingreso"
           icon="pi pi-save"
-          severity="success"
           :loading="saving"
           :disabled="!isFormValid"
           @click="save"
