@@ -1,5 +1,5 @@
 {
-  "installCommand": "echo skip",
-  "buildCommand": "cd spa && npm install && node node_modules/vite/bin/vite.js build",
+  "installCommand": "cd spa && pnpm install --ignore-workspace",
+  "buildCommand": "cd spa && pnpm run build",
   "outputDirectory": "spa/dist"
 }
