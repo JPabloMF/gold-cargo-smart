@@ -11,6 +11,8 @@
           optionLabel="label"
           optionValue="value"
           filter
+          :loading="loadingOriginPorts"
+          :disabled="loadingOriginPorts"
           inputId="origin_port"
           class="w-full"
         >
@@ -83,6 +85,7 @@ const store = useQuoteStore();
 const loadTypes = LOAD_TYPES;
 const destinationPorts = DESTINATION_PORTS;
 const originPorts = ref([]);
+const loadingOriginPorts = ref(true);
 
 // Normalize: uppercase, remove dots and spaces
 const normalize = (str) => str.toUpperCase().replace(/[\s.]/g, "");
@@ -115,6 +118,8 @@ onMounted(async () => {
     }
   } catch (error) {
     console.error("[ShipmentDetails] Error fetching origin ports:", error);
+  } finally {
+    loadingOriginPorts.value = false;
   }
 });
 </script>
