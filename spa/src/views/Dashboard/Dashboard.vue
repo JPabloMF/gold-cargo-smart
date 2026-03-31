@@ -31,7 +31,7 @@ const closeMobileMenu = () => {
     <!-- Desktop Sidebar (Visible on large screens) -->
     <aside class="sidebar desktop-only">
       <div class="brand">
-        <img src="/gold_cargo.png" alt="Logo" class="sidebar-logo" />
+        <img src="/gold_cargo_white_bluebg.png" alt="Logo" class="sidebar-logo" />
       </div>
       
       <nav class="nav-links flex-grow">
@@ -72,8 +72,7 @@ const closeMobileMenu = () => {
         <font-awesome-icon icon="bars" />
       </Button>
       <div class="mobile-brand">
-        <img src="/gold_cargo.png" alt="Logo" class="mobile-logo" />
-        <span>Gold Cargo</span>
+        <img src="/gold_cargo_white_bluebg.png" alt="Logo" class="mobile-logo" />
       </div>
       <div class="spacer"></div>
     </div>
@@ -81,7 +80,7 @@ const closeMobileMenu = () => {
     <Drawer v-model:visible="mobileMenuVisible" header="Menú" class="mobile-drawer">
       <template #header>
         <div class="brand-drawer">
-          <img src="/gold_cargo.png" alt="Logo" class="sidebar-logo" />
+          <img src="/gold_cargo_white_bluebg.png" alt="Logo" class="sidebar-logo" />
         </div>
       </template>
       
@@ -239,7 +238,7 @@ const closeMobileMenu = () => {
 
   .brand {
     padding: 0 1.2rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -280,7 +279,7 @@ const closeMobileMenu = () => {
     color: #ECBF26;
     font-family: 'Russo One', sans-serif;
 
-    .mobile-logo { width: 2rem; height: auto; }
+    .mobile-logo { width: 4rem; height: auto; }
   }
   .spacer { flex: 1; }
 }
@@ -293,7 +292,7 @@ const closeMobileMenu = () => {
   font-size: 1.4rem;
   color: #2C3D69;
   font-family: 'Russo One', sans-serif;
-  .sidebar-logo { width: 2.4rem; height: auto; }
+  .sidebar-logo { width: 5.4rem; height: auto; }
 }
 
 .content-area {
@@ -334,5 +333,12 @@ const closeMobileMenu = () => {
   background-color: transparent;
   color: rgba(255, 255, 255, 0.7);
   .nav-icon { color: rgba(255, 255, 255, 0.7); }
+}
+</style>
+
+<style>
+.mobile-drawer {
+  background-color: #2C3D69;
+  border: none;
 }
 </style>
