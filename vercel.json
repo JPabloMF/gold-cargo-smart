@@ -1,0 +1,5 @@
+{
+  "installCommand": "cd spa && npm install",
+  "buildCommand": "cd spa && npm run build",
+  "outputDirectory": "spa/dist"
+}
