@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd spa && npm install && npm run build",
+  "outputDirectory": "spa/dist",
+  "installCommand": "echo 'skip'"
+}
