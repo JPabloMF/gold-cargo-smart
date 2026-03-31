@@ -1,6 +1,5 @@
 import { ref, computed } from "vue";
 import { useQuoteStore } from "@/stores/quote";
-import { useAuthStore } from "@/stores/auth";
 import { buildQuotePdf, parseDimensions } from "@/utils/quotePdf";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -65,7 +64,6 @@ const loadLogoBase64 = async () => {
 
 export const useQuoteGenerator = () => {
   const store = useQuoteStore();
-  const authStore = useAuthStore();
   const generating = ref(false);
   const errorMsg = ref("");
 
@@ -87,11 +85,8 @@ export const useQuoteGenerator = () => {
     errorMsg.value = "";
 
     try {
-      // Fetch destination fees
-      const incomeHeaders = authStore.token
-        ? { Authorization: `Bearer ${authStore.token}` }
-        : {};
-      const incomeResp = await fetch(`${API_URL}/income`, { headers: incomeHeaders });
+      // Fetch destination fees (public endpoint, no auth required)
+      const incomeResp = await fetch(`${API_URL}/income`);
       if (!incomeResp.ok) {
         errorMsg.value = "No se pudo obtener la configuración de tarifas. Contacte al administrador.";
         return;
