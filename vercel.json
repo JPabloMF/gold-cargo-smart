@@ -1,5 +1,6 @@
 {
   "installCommand": "cd spa && pnpm install --ignore-workspace",
   "buildCommand": "cd spa && pnpm run build",
-  "outputDirectory": "spa/dist"
+  "outputDirectory": "spa/dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
