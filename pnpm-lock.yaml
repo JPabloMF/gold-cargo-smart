@@ -51,6 +51,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.2.1
         version: 4.2.1(vite@7.3.1(jiti@2.6.1)(lightningcss@1.31.1)(sass@1.97.3)(yaml@2.8.2))
+      '@vitejs/plugin-vue':
+        specifier: ^6.0.2
+        version: 6.0.4(vite@7.3.1(jiti@2.6.1)(lightningcss@1.31.1)(sass@1.97.3)(yaml@2.8.2))(vue@3.5.29)
       jspdf:
         specifier: ^4.2.1
         version: 4.2.1
@@ -63,9 +66,15 @@ importers:
       primevue:
         specifier: ^4.5.4
         version: 4.5.4(vue@3.5.29)
+      sass:
+        specifier: ^1.97.3
+        version: 1.97.3
       tailwindcss:
         specifier: ^4.2.1
         version: 4.2.1
+      vite:
+        specifier: ^7.3.1
+        version: 7.3.1(jiti@2.6.1)(lightningcss@1.31.1)(sass@1.97.3)(yaml@2.8.2)
       vue:
         specifier: ^3.5.25
         version: 3.5.29
@@ -75,16 +84,6 @@ importers:
       xlsx:
         specifier: ^0.18.5
         version: 0.18.5
-    devDependencies:
-      '@vitejs/plugin-vue':
-        specifier: ^6.0.2
-        version: 6.0.4(vite@7.3.1(jiti@2.6.1)(lightningcss@1.31.1)(sass@1.97.3)(yaml@2.8.2))(vue@3.5.29)
-      sass:
-        specifier: ^1.97.3
-        version: 1.97.3
-      vite:
-        specifier: ^7.3.1
-        version: 7.3.1(jiti@2.6.1)(lightningcss@1.31.1)(sass@1.97.3)(yaml@2.8.2)
 
 packages:
 
