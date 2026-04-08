@@ -11,21 +11,50 @@
   --font-sans:  'Quicksand', sans-serif;
 }
 
-/* ── PrimeVue primary color override (navy) ── */
+/* ── PrimeVue primary color override (light yellow) ── */
 :root {
-  --p-primary-50:  #eef1f8;
-  --p-primary-100: #d5dcee;
-  --p-primary-200: #aab9dd;
-  --p-primary-300: #7f96cc;
-  --p-primary-400: #5473bb;
-  --p-primary-500: #2C3D69;
-  --p-primary-600: #263560;
-  --p-primary-700: #1f2d52;
-  --p-primary-800: #182445;
-  --p-primary-900: #111c37;
-  --p-primary-950: #0b132a;
-  --p-primary-color: #2C3D69;
-  --p-primary-contrast-color: #ffffff;
+  --p-primary-50:  #fffff5;
+  --p-primary-100: #ffffd6;
+  --p-primary-200: #ffffb8;
+  --p-primary-300: #ffff9e;
+  --p-primary-400: #ffff94;
+  --p-primary-500: #FFFF90;
+  --p-primary-600: #e6e67a;
+  --p-primary-700: #cccc63;
+  --p-primary-800: #b3b34d;
+  --p-primary-900: #999936;
+  --p-primary-950: #808020;
+  --p-primary-color: #FFFF90;
+  --p-primary-contrast-color: #2C3D69;
+}
+
+/* ── Override all button severities to use brand light yellow ── */
+.p-button,
+.p-button.p-button-secondary,
+.p-button.p-button-success,
+.p-button.p-button-danger,
+.p-button.p-button-warning,
+.p-button.p-button-info,
+.p-button.p-button-help,
+.p-button.p-button-contrast {
+  background-color: #FFFF90 !important;
+  border-color: #FFFF90 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+.p-button:hover,
+.p-button.p-button-secondary:hover,
+.p-button.p-button-success:hover,
+.p-button.p-button-danger:hover,
+.p-button.p-button-warning:hover,
+.p-button.p-button-info:hover,
+.p-button.p-button-help:hover,
+.p-button.p-button-contrast:hover {
+  background-color: #e6e67a !important;
+  border-color: #e6e67a !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
 }
 
 body {

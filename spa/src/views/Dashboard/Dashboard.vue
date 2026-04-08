@@ -53,8 +53,7 @@ const closeMobileMenu = () => {
           <font-awesome-icon icon="user" class="footer-icon" />
           <span class="email" :title="authStore.user?.email">{{ authStore.user?.email }}</span>
         </div>
-        <Button 
-          severity="danger" 
+        <Button
           variant="text" 
           class="logout-btn" 
           @click="handleLogout" 
@@ -105,8 +104,7 @@ const closeMobileMenu = () => {
             <font-awesome-icon icon="user" class="footer-icon" />
             <span class="email">{{ authStore.user?.email }}</span>
           </div>
-          <Button 
-            severity="danger" 
+          <Button
             variant="text" 
             class="logout-btn" 
             @click="handleLogout" 
@@ -212,7 +210,6 @@ const closeMobileMenu = () => {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    color: rgba(255, 255, 255, 0.7) !important;
 
     &:hover {
       color: #ff6b6b !important;
@@ -244,7 +241,7 @@ const closeMobileMenu = () => {
     justify-content: center;
     gap: 0.8rem;
 
-    .sidebar-logo { width: 5.8rem; height: auto; }
+    .sidebar-logo { width: 10rem; height: auto; }
     h2 {
       margin: 0;
       font-size: 1.6rem;
