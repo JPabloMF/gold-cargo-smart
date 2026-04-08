@@ -6,7 +6,7 @@
   --color-brand-navy:  #2C3D69;
   --color-brand-gold:  #ECBF26;
   --color-brand-yellow: #FFCF25;
-  --color-brand-light: #FFFF90;
+  --color-brand-light: #FFCF25;
   --font-brand: 'Russo One', sans-serif;
   --font-sans:  'Quicksand', sans-serif;
 }
@@ -18,13 +18,13 @@
   --p-primary-200: #ffffb8;
   --p-primary-300: #ffff9e;
   --p-primary-400: #ffff94;
-  --p-primary-500: #FFFF90;
-  --p-primary-600: #e6e67a;
+  --p-primary-500: #FFCF25;
+  --p-primary-600: #e6b820;
   --p-primary-700: #cccc63;
   --p-primary-800: #b3b34d;
   --p-primary-900: #999936;
   --p-primary-950: #808020;
-  --p-primary-color: #FFFF90;
+  --p-primary-color: #FFCF25;
   --p-primary-contrast-color: #2C3D69;
 }
 
@@ -37,8 +37,8 @@
 .p-button.p-button-info,
 .p-button.p-button-help,
 .p-button.p-button-contrast {
-  background-color: #FFFF90 !important;
-  border-color: #FFFF90 !important;
+  background-color: #FFCF25 !important;
+  border-color: #FFCF25 !important;
   color: #000000 !important;
   font-weight: 700 !important;
 }
@@ -51,8 +51,8 @@
 .p-button.p-button-info:hover,
 .p-button.p-button-help:hover,
 .p-button.p-button-contrast:hover {
-  background-color: #e6e67a !important;
-  border-color: #e6e67a !important;
+  background-color: #e6b820 !important;
+  border-color: #e6b820 !important;
   color: #000000 !important;
   font-weight: 700 !important;
 }
