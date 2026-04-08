@@ -203,7 +203,7 @@ const handleRegister = async () => {
   color: #64748b;
 
   .login-link {
-    color: #ECBF26;
+    color: #FFCF25;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.2s;

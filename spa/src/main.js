@@ -15,8 +15,8 @@ const GoldCargoPreset = definePreset(Aura, {
         light: {
           root: {
             primary: {
-              background: '#ECBF26',
-              borderColor: '#ECBF26',
+              background: '#FFCF25',
+              borderColor: '#FFCF25',
               color: '#2C3D69',
               hoverBackground: '#d4a91f',
               hoverBorderColor: '#d4a91f',

@@ -171,7 +171,7 @@ const closeMobileMenu = () => {
     }
 
     &.active, &.exact-active {
-      background-color: #ECBF26;
+      background-color: #FFCF25;
       color: #2C3D69;
       .nav-icon { color: #2C3D69; }
     }
@@ -246,7 +246,7 @@ const closeMobileMenu = () => {
       margin: 0;
       font-size: 1.6rem;
       font-weight: 700;
-      color: #ECBF26;
+      color: #FFCF25;
       font-family: 'Russo One', sans-serif;
       letter-spacing: 0.05em;
     }
@@ -273,7 +273,7 @@ const closeMobileMenu = () => {
     gap: 0.6rem;
     font-weight: 700;
     font-size: 1.4rem;
-    color: #ECBF26;
+    color: #FFCF25;
     font-family: 'Russo One', sans-serif;
 
     .mobile-logo { width: 4rem; height: auto; }
