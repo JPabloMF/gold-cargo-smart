@@ -1,7 +1,7 @@
 <template>
   <Menubar>
     <template #start>
-      <img src="/gold_cargo.png" alt="gold cargo logo" class="w-20 mr-2" />
+      <img src="/gold_cargo.png" alt="gold cargo logo" class="w-30" />
     </template>
     <template #end>
       <Button label="Contactanos" severity="success"></Button>
