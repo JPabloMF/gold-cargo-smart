@@ -25,7 +25,7 @@ const drawHeader = (doc, logoBase64) => {
   doc.setFillColor(...NAVY);
   doc.rect(0, 0, pageW, 4, "F");
 
-  const LOGO_X = M, LOGO_Y = 8, LOGO_W = 52, LOGO_H = 37;
+  const LOGO_X = M, LOGO_Y = 8, LOGO_W = 82, LOGO_H = 67;
   const INFO_X = M + LOGO_W + 5;
   const INFO_W = pageW - INFO_X - M;
   const INFO_CX = INFO_X + INFO_W / 2;
