@@ -47,7 +47,7 @@ const getMinima = (row) => row["MIN"] ?? null;
 
 const loadLogoBase64 = async () => {
   try {
-    const resp = await fetch("/gold_cargo.png");
+    const resp = await fetch("/gold_cargo_pdf.png");
     if (!resp.ok) return null;
     const blob = await resp.blob();
     return new Promise((resolve, reject) => {
