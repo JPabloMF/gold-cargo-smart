@@ -1,13 +1,77 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import Card from 'primevue/card';
+import Chart from 'primevue/chart';
+import { storeToRefs } from 'pinia';
+import { useQuoteHistoryStore } from '@/stores/quoteHistory';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const totalQuotes = ref('...');
 const activeRates = ref('...');
 
+const historyStore = useQuoteHistoryStore();
+const { entries: quotes } = storeToRefs(historyStore);
+
+// --- Donut: load type breakdown ---
+const typeChartData = computed(() => {
+  const counts = {};
+  for (const q of quotes.value) {
+    const t = q.type ?? 'OTRO';
+    counts[t] = (counts[t] ?? 0) + 1;
+  }
+  const labels = Object.keys(counts);
+  const data = labels.map(l => counts[l]);
+  return {
+    labels,
+    datasets: [{
+      data,
+      backgroundColor: ['#3b82f6', '#8b5cf6', '#f59e0b', '#10b981', '#ef4444'],
+      hoverOffset: 6,
+    }],
+  };
+});
+
+const typeChartOptions = {
+  cutout: '65%',
+  plugins: {
+    legend: { position: 'bottom', labels: { font: { size: 12 }, padding: 16 } },
+    tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}` } },
+  },
+};
+
+// --- Bar: top 5 destinations ---
+const destChartData = computed(() => {
+  const counts = {};
+  for (const q of quotes.value) {
+    const d = q.destination ?? 'Desconocido';
+    counts[d] = (counts[d] ?? 0) + 1;
+  }
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  return {
+    labels: sorted.map(([k]) => k),
+    datasets: [{
+      label: 'Cotizaciones',
+      data: sorted.map(([, v]) => v),
+      backgroundColor: '#3b82f6',
+      borderRadius: 6,
+      barThickness: 28,
+    }],
+  };
+});
+
+const destChartOptions = {
+  indexAxis: 'y',
+  plugins: { legend: { display: false } },
+  scales: {
+    x: { ticks: { precision: 0 }, grid: { color: '#f1f5f9' } },
+    y: { ticks: { font: { size: 12 } }, grid: { display: false } },
+  },
+};
+
 onMounted(async () => {
+  historyStore.fetchEntries();
+
   const [quotesRes, ratesRes] = await Promise.allSettled([
     fetch(`${API_URL}/quotes/count`),
     fetch(`${API_URL}/rates`),
@@ -67,19 +131,39 @@ onMounted(async () => {
       </Card>
     </div>
 
-    <div class="recent-activity mt-8">
-      <Card>
+    <div class="charts-grid mt-8">
+      <Card class="chart-card">
         <template #title>
           <div class="flex items-center gap-2">
-            <font-awesome-icon icon="chart-line" class="text-blue-500 text-lg" />
-            <span class="text-lg font-bold">Estado del Sistema</span>
+            <font-awesome-icon :icon="['fas', 'chart-pie']" class="text-blue-500" />
+            <span>Tipos de Carga</span>
           </div>
         </template>
         <template #content>
-          <div class="status-placeholder">
-            <font-awesome-icon icon="check-circle" class="text-green-500 mb-2 status-icon" />
-            <h3>Todos los Servicios Operativos</h3>
-            <p>Los sistemas de Base de Datos y Gestión de Tarifas están funcionando normalmente.</p>
+          <div v-if="quotes.length === 0" class="chart-empty">
+            <font-awesome-icon :icon="['fas', 'chart-pie']" class="empty-icon" />
+            <p>Sin datos aún</p>
+          </div>
+          <div v-else class="chart-wrapper">
+            <Chart type="doughnut" :data="typeChartData" :options="typeChartOptions" />
+          </div>
+        </template>
+      </Card>
+
+      <Card class="chart-card">
+        <template #title>
+          <div class="flex items-center gap-2">
+            <font-awesome-icon :icon="['fas', 'chart-bar']" class="text-purple-500" />
+            <span>Top Destinos</span>
+          </div>
+        </template>
+        <template #content>
+          <div v-if="quotes.length === 0" class="chart-empty">
+            <font-awesome-icon :icon="['fas', 'chart-bar']" class="empty-icon" />
+            <p>Sin datos aún</p>
+          </div>
+          <div v-else class="chart-wrapper">
+            <Chart type="bar" :data="destChartData" :options="destChartOptions" />
           </div>
         </template>
       </Card>
@@ -150,28 +234,46 @@ onMounted(async () => {
   }
 }
 
-.status-placeholder {
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  gap: 1.2rem;
+}
+
+.chart-card {
+  border-radius: 0.8rem;
+  border: 0.1rem solid #e2e8f0;
+  box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.05);
+
+  :deep(.p-card-title) {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1e293b;
+  }
+}
+
+.chart-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0;
+  max-height: 22rem;
+}
+
+.chart-empty {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 3rem 0;
-  text-align: center;
+  color: #94a3b8;
+  gap: 0.8rem;
 
-  .status-icon {
-    font-size: 3rem;
-  }
-
-  h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 0.4rem;
+  .empty-icon {
+    font-size: 2.5rem;
   }
 
   p {
     font-size: 1.2rem;
-    color: #64748b;
   }
 }
 
