@@ -1,10 +1,24 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import Card from 'primevue/card';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+const totalQuotes = ref('...');
+
+onMounted(async () => {
+  try {
+    const res = await fetch(`${API_URL}/quotes/count`);
+    if (res.ok) {
+      const data = await res.json();
+      totalQuotes.value = data.totalQuotes ?? 0;
+    }
+  } catch {
+    totalQuotes.value = '–';
+  }
+});
+
 const stats = [
-  { label: 'Total Cotizaciones', value: '124', icon: 'file-pen', color: '#3b82f6', bg: '#eff6ff' },
-  { label: 'Pendientes', value: '12', icon: 'clock', color: '#f59e0b', bg: '#fffbeb' },
-  { label: 'Completadas', value: '108', icon: 'check-circle', color: '#10b981', bg: '#ecfdf5' },
   { label: 'Tarifas Activas', value: '4 Continentes', icon: 'globe', color: '#8b5cf6', bg: '#f5f3ff' }
 ];
 </script>
@@ -17,6 +31,19 @@ const stats = [
     </div>
 
     <div class="stats-grid">
+      <Card class="stat-card">
+        <template #content>
+          <div class="stat-content">
+            <div class="stat-icon" :style="{ color: '#3b82f6', backgroundColor: '#eff6ff' }">
+              <font-awesome-icon :icon="['fas', 'file-pen']" />
+            </div>
+            <div class="stat-info">
+              <span class="label">Total Cotizaciones</span>
+              <span class="value">{{ totalQuotes }}</span>
+            </div>
+          </div>
+        </template>
+      </Card>
       <Card v-for="stat in stats" :key="stat.label" class="stat-card">
         <template #content>
           <div class="stat-content">

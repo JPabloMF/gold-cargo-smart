@@ -131,6 +131,9 @@ export const useQuoteGenerator = () => {
       };
 
       buildQuotePdf(quoteData, income, mwRate, minima, logoBase64);
+
+      // Record the generated quote in the database (fire-and-forget)
+      fetch(`${API_URL}/quotes/count`, { method: "POST" }).catch(() => {});
     } catch (err) {
       console.error("[useQuoteGenerator] Error generating quote:", err);
       errorMsg.value = "Ocurrió un error al generar la cotización.";
