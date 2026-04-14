@@ -5,22 +5,30 @@ import Card from 'primevue/card';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const totalQuotes = ref('...');
+const activeRates = ref('...');
 
 onMounted(async () => {
-  try {
-    const res = await fetch(`${API_URL}/quotes/count`);
-    if (res.ok) {
-      const data = await res.json();
-      totalQuotes.value = data.totalQuotes ?? 0;
-    }
-  } catch {
+  const [quotesRes, ratesRes] = await Promise.allSettled([
+    fetch(`${API_URL}/quotes/count`),
+    fetch(`${API_URL}/rates`),
+  ]);
+
+  if (quotesRes.status === 'fulfilled' && quotesRes.value.ok) {
+    const data = await quotesRes.value.json();
+    totalQuotes.value = data.totalQuotes ?? 0;
+  } else {
     totalQuotes.value = '–';
+  }
+
+  if (ratesRes.status === 'fulfilled' && ratesRes.value.ok) {
+    const data = await ratesRes.value.json();
+    const count = data.data?.length ?? 0;
+    activeRates.value = count === 1 ? '1 Continente' : `${count} Continentes`;
+  } else {
+    activeRates.value = '–';
   }
 });
 
-const stats = [
-  { label: 'Tarifas Activas', value: '4 Continentes', icon: 'globe', color: '#8b5cf6', bg: '#f5f3ff' }
-];
 </script>
 
 <template>
@@ -44,15 +52,15 @@ const stats = [
           </div>
         </template>
       </Card>
-      <Card v-for="stat in stats" :key="stat.label" class="stat-card">
+      <Card class="stat-card">
         <template #content>
           <div class="stat-content">
-            <div class="stat-icon" :style="{ color: stat.color, backgroundColor: stat.bg }">
-              <font-awesome-icon :icon="['fas', getIconName(stat.icon)]" />
+            <div class="stat-icon" :style="{ color: '#8b5cf6', backgroundColor: '#f5f3ff' }">
+              <font-awesome-icon :icon="['fas', 'globe']" />
             </div>
             <div class="stat-info">
-              <span class="label">{{ stat.label }}</span>
-              <span class="value">{{ stat.value }}</span>
+              <span class="label">Tarifas Activas</span>
+              <span class="value">{{ activeRates }}</span>
             </div>
           </div>
         </template>
@@ -79,22 +87,6 @@ const stats = [
   </div>
 </template>
 
-<script>
-// Helper to map old prime icons to fontawesome icons if they differ
-export default {
-  methods: {
-    getIconName(icon) {
-      const mapping = {
-        'file-edit': 'file-edit', // Note: I need to ensure faFileEdit is in the library
-        'clock': 'clock-rotate-left',
-        'check-circle': 'check-circle',
-        'globe': 'globe'
-      };
-      return mapping[icon] || icon;
-    }
-  }
-}
-</script>
 
 <style lang="scss" scoped>
 .dashboard-overview {
