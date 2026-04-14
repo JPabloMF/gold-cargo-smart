@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import InputText from 'primevue/inputtext';
@@ -10,7 +11,7 @@ const filters = ref({
 });
 
 const historyStore = useQuoteHistoryStore();
-const quotes = historyStore.entries;
+const { entries: quotes, loading } = storeToRefs(historyStore);
 
 onMounted(() => historyStore.fetchEntries());
 </script>
@@ -33,7 +34,7 @@ onMounted(() => historyStore.fetchEntries());
     <div class="table-container card">
       <DataTable
         :value="quotes"
-        :loading="historyStore.loading"
+        :loading="loading"
         paginator
         :rows="10"
         dataKey="_id"
