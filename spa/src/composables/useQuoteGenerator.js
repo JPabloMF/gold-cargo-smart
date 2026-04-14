@@ -1,5 +1,6 @@
 import { ref, computed } from "vue";
 import { useQuoteStore } from "@/stores/quote";
+import { useQuoteHistoryStore } from "@/stores/quoteHistory";
 import { buildQuotePdf, parseDimensions } from "@/utils/quotePdf";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -64,6 +65,7 @@ const loadLogoBase64 = async () => {
 
 export const useQuoteGenerator = () => {
   const store = useQuoteStore();
+  const history = useQuoteHistoryStore();
   const generating = ref(false);
   const errorMsg = ref("");
 
@@ -132,8 +134,13 @@ export const useQuoteGenerator = () => {
 
       buildQuotePdf(quoteData, income, mwRate, minima, logoBase64);
 
-      // Record the generated quote in the database (fire-and-forget)
-      fetch(`${API_URL}/quotes/count`, { method: "POST" }).catch(() => {});
+      // Save to quote history (also increments the global counter on the backend)
+      history.addEntry({
+        customer: store.customerName || "—",
+        origin: store.selectedOriginPort,
+        destination: store.selectedDestinationPort?.name ?? store.selectedDestinationPort,
+        type: store.selectedLoadType?.value?.toUpperCase() ?? store.selectedLoadType,
+      });
     } catch (err) {
       console.error("[useQuoteGenerator] Error generating quote:", err);
       errorMsg.value = "Ocurrió un error al generar la cotización.";

@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 
 export const useQuoteStore = defineStore("quote", () => {
+  const customerName = ref("");
   const fleteChecked = ref(true);
   const aduanaChecked = ref(false);
   const terresteChecked = ref(false);
@@ -92,6 +93,7 @@ export const useQuoteStore = defineStore("quote", () => {
   });
 
   return {
+    customerName,
     fleteChecked,
     aduanaChecked,
     terresteChecked,

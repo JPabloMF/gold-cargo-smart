@@ -1,30 +1,18 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import Tag from 'primevue/tag';
-import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
+import { useQuoteHistoryStore } from '@/stores/quoteHistory';
 
 const filters = ref({
   global: { value: null }
 });
 
-const quotes = ref([
-  { id: '1001', date: '2026-03-10', customer: 'Global Logistics Inc', origin: 'China', destination: 'Colombia', type: 'FCL', status: 'Completada' },
-  { id: '1002', date: '2026-03-11', customer: 'Andes Trading', origin: 'USA', destination: 'Colombia', type: 'LCL', status: 'Pendiente' },
-  { id: '1003', date: '2026-03-12', customer: 'Ocean Blue Co', origin: 'España', destination: 'Colombia', type: 'FCL', status: 'Pendiente' },
-  { id: '1004', date: '2026-03-12', customer: 'Pacific Imports', origin: 'Vietnam', destination: 'Colombia', type: 'FCL', status: 'Cancelada' },
-]);
+const historyStore = useQuoteHistoryStore();
+const quotes = historyStore.entries;
 
-const getSeverity = (status) => {
-  switch (status) {
-    case 'Completada': return 'success';
-    case 'Pendiente': return 'warn';
-    case 'Cancelada': return 'danger';
-    default: return null;
-  }
-};
+onMounted(() => historyStore.fetchEntries());
 </script>
 
 <template>
@@ -43,31 +31,29 @@ const getSeverity = (status) => {
     </div>
 
     <div class="table-container card">
-      <DataTable 
-        :value="quotes" 
-        paginator 
-        :rows="10" 
-        dataKey="id" 
+      <DataTable
+        :value="quotes"
+        :loading="historyStore.loading"
+        paginator
+        :rows="10"
+        dataKey="_id"
         stripedRows
         responsiveLayout="scroll"
         class="custom-table"
+        :filters="filters"
+        filterDisplay="menu"
+        :globalFilterFields="['customer', 'origin', 'destination', 'type']"
       >
-        <Column field="id" header="ID" sortable></Column>
-        <Column field="date" header="Fecha" sortable></Column>
+        <Column field="_id" header="ID" sortable></Column>
+        <Column header="Fecha" sortable sortField="createdAt">
+          <template #body="slotProps">
+            {{ slotProps.data.createdAt?.slice(0, 10) }}
+          </template>
+        </Column>
         <Column field="customer" header="Cliente" sortable></Column>
         <Column field="origin" header="Origen" sortable></Column>
         <Column field="destination" header="Destino" sortable></Column>
         <Column field="type" header="Tipo de Carga" sortable></Column>
-        <Column field="status" header="Estado" sortable>
-          <template #body="slotProps">
-            <Tag :value="slotProps.data.status" :severity="getSeverity(slotProps.data.status)" />
-          </template>
-        </Column>
-        <Column header="Acciones">
-          <template #body>
-            <Button icon="pi pi-eye" variant="text" severity="secondary" rounded />
-          </template>
-        </Column>
       </DataTable>
     </div>
   </div>
@@ -131,24 +117,10 @@ const getSeverity = (status) => {
     color: #334155;
   }
 
-  .p-tag {
-    font-size: 0.9rem;
-    padding: 0.15rem 0.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
   .p-paginator {
     padding: 0.6rem;
     font-size: 1.1rem;
   }
 }
 
-:deep(.p-button.p-button-rounded) {
-  width: 2.6rem;
-  height: 2.6rem;
-  i {
-    font-size: 1rem;
-  }
-}
 </style>

@@ -5,6 +5,14 @@
     </Divider>
     <div class="flex flex-wrap justify-center gap-5">
       <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
+        <InputText
+          v-model="store.customerName"
+          inputId="customer_name"
+          class="w-full"
+        />
+        <label for="customer_name">Nombre del Cliente</label>
+      </FloatLabel>
+      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
         <Select
           v-model="store.selectedOriginPort"
           :options="originPorts"
@@ -76,6 +84,7 @@
 import Divider from "primevue/divider";
 import Select from "primevue/select";
 import FloatLabel from "primevue/floatlabel";
+import InputText from "primevue/inputtext";
 import { ref, onMounted } from "vue";
 import { useQuoteStore } from "@/stores/quote";
 import { COUNTRIES, LOAD_TYPES, DESTINATION_PORTS } from "@/utils/constants";
