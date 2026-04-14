@@ -31,7 +31,7 @@ const closeMobileMenu = () => {
     <!-- Desktop Sidebar (Visible on large screens) -->
     <aside class="sidebar desktop-only">
       <div class="brand">
-        <img src="/gold_cargo_white_bluebg.png" alt="Logo" class="sidebar-logo" />
+        <img src="/gold_cargo.png" alt="Logo" class="sidebar-logo" />
       </div>
       
       <nav class="nav-links flex-grow">
@@ -71,7 +71,7 @@ const closeMobileMenu = () => {
         <font-awesome-icon icon="bars" />
       </Button>
       <div class="mobile-brand">
-        <img src="/gold_cargo_white_bluebg.png" alt="Logo" class="mobile-logo" />
+        <img src="/gold_cargo.png" alt="Logo" class="mobile-logo" />
       </div>
       <div class="spacer"></div>
     </div>
@@ -79,7 +79,7 @@ const closeMobileMenu = () => {
     <Drawer v-model:visible="mobileMenuVisible" header="Menú" class="mobile-drawer">
       <template #header>
         <div class="brand-drawer">
-          <img src="/gold_cargo_white_bluebg.png" alt="Logo" class="sidebar-logo" />
+          <img src="/gold_cargo.png" alt="Logo" class="sidebar-logo" />
         </div>
       </template>
       
@@ -152,7 +152,7 @@ const closeMobileMenu = () => {
     align-items: center;
     gap: 1rem;
     padding: 0.8rem 1rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: #4b5563;
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 600;
@@ -166,8 +166,8 @@ const closeMobileMenu = () => {
     }
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      color: #ffffff;
+      background-color: rgba(44, 61, 105, 0.08);
+      color: #2C3D69;
     }
 
     &.active, &.exact-active {
@@ -180,7 +180,7 @@ const closeMobileMenu = () => {
 
 .sidebar-footer {
   padding: 1.2rem;
-  border-top: 0.1rem solid rgba(255, 255, 255, 0.12);
+  border-top: 0.1rem solid #e5e7eb;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -189,7 +189,7 @@ const closeMobileMenu = () => {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: #6b7280;
     font-size: 1.1rem;
 
     .footer-icon {
@@ -210,6 +210,7 @@ const closeMobileMenu = () => {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    color: #4b5563 !important;
 
     &:hover {
       color: #ff6b6b !important;
@@ -226,12 +227,12 @@ const closeMobileMenu = () => {
 .sidebar {
   width: 20rem;
   height: 100vh;
-  background-color: #2C3D69;
-  border-right: none;
+  background-color: #ffffff;
+  border-right: 0.1rem solid #e5e7eb;
   display: flex;
   flex-direction: column;
   padding: 1.2rem 0;
-  box-shadow: 0.4rem 0 1.5rem rgba(44, 61, 105, 0.3);
+  box-shadow: 0.2rem 0 1.5rem rgba(0, 0, 0, 0.1);
 
   .brand {
     padding: 0 1.2rem;
@@ -241,7 +242,7 @@ const closeMobileMenu = () => {
     justify-content: center;
     gap: 0.8rem;
 
-    .sidebar-logo { width: 10rem; height: auto; }
+    .sidebar-logo { width: 15rem; height: auto; }
     h2 {
       margin: 0;
       font-size: 1.6rem;
@@ -257,9 +258,9 @@ const closeMobileMenu = () => {
 .mobile-header {
   display: flex;
   align-items: center;
-  background-color: #2C3D69;
+  background-color: #ffffff;
   padding: 0.6rem 1.2rem;
-  border-bottom: none;
+  border-bottom: 0.1rem solid #e5e7eb;
   gap: 0.8rem;
 
   :deep(.p-button) {
@@ -276,7 +277,7 @@ const closeMobileMenu = () => {
     color: #FFCF25;
     font-family: 'Russo One', sans-serif;
 
-    .mobile-logo { width: 4rem; height: auto; }
+    .mobile-logo { width: 7rem; height: auto; }
   }
   .spacer { flex: 1; }
 }
@@ -289,7 +290,7 @@ const closeMobileMenu = () => {
   font-size: 1.4rem;
   color: #2C3D69;
   font-family: 'Russo One', sans-serif;
-  .sidebar-logo { width: 5.4rem; height: auto; }
+  .sidebar-logo { width: 8.4rem; height: auto; }
 }
 
 .content-area {
@@ -328,8 +329,8 @@ const closeMobileMenu = () => {
 // Global active class fix for the "Overview" link
 .nav-item[href="/dashboard"].active:not(.exact-active) {
   background-color: transparent;
-  color: rgba(255, 255, 255, 0.7);
-  .nav-icon { color: rgba(255, 255, 255, 0.7); }
+  color: #4b5563;
+  .nav-icon { color: #4b5563; }
 }
 </style>
 
