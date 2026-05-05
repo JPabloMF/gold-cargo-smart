@@ -144,7 +144,6 @@ const drawCostTable = (doc, quoteData, income, mwRate, minima, startY) => {
   const volumenM3 = dims ? dims.volume : 0;
   const ganaPeso = pesoTons >= volumenM3;
   const winner = ganaPeso ? pesoTons : volumenM3;
-  const winnerLabel = ganaPeso ? "Peso" : "Volumen";
 
   doc.setFontSize(10);
   doc.setFont("helvetica", "bold");
@@ -165,9 +164,9 @@ const drawCostTable = (doc, quoteData, income, mwRate, minima, startY) => {
 
     const fleteDesc = usedMinima
       ? `Mínima: ${winner.toFixed(3)} × USD ${mw.toFixed(2)} = USD ${fleteCalc.toFixed(2)} < Mín USD ${min.toFixed(2)}`
-      : `${winner.toFixed(3)} × USD ${mw.toFixed(2)} = USD ${fleteCalc.toFixed(2)}`;
+      : `${winner.toFixed(3)} × USD ${mw.toFixed(2)}`;
 
-    rows.push([`Flete (${winnerLabel} gana)`, fleteDesc, "-", fmt(fleteBase)]);
+    rows.push([`Flete`, fleteDesc, "-", fmt(fleteBase)]);
     totalBase += fleteBase;
     totalGrand += fleteBase;
   } else {
@@ -218,6 +217,50 @@ const drawCostTable = (doc, quoteData, income, mwRate, minima, startY) => {
   doc.text(fmt(totalGrand), pageW / 2 + 1, afterY, { align: "left" });
 };
 
+const drawWarningCallout = (doc, startY) => {
+  const pageW = doc.internal.pageSize.getWidth();
+  const boxX = M;
+  const boxW = pageW - M * 2;
+  const padding = 4;
+  const iconW = 8;
+  const msg =
+    "Los servicios adicionales preseleccionados no se encuentran incluidos en la cotización generada. " +
+    "Nuestro equipo comercial se comunicará con usted a la brevedad posible para informarle el costo de dichos servicios.";
+
+  doc.setFontSize(8.5);
+  doc.setFont("helvetica", "normal");
+  const lines = doc.splitTextToSize(msg, boxW - padding * 2 - iconW);
+  const lineH = 4.5;
+  const boxH = lines.length * lineH + padding * 2;
+
+  // Background
+  doc.setFillColor(255, 248, 220);
+  doc.roundedRect(boxX, startY, boxW, boxH, 2, 2, "F");
+
+  // Left accent bar (gold)
+  doc.setFillColor(...GOLD);
+  doc.roundedRect(boxX, startY, 3, boxH, 1, 1, "F");
+
+  // Border
+  doc.setDrawColor(220, 170, 0);
+  doc.setLineWidth(0.4);
+  doc.roundedRect(boxX, startY, boxW, boxH, 2, 2, "S");
+
+  // Warning icon (triangle ⚠)
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(180, 120, 0);
+  doc.text("!", boxX + 3 + 3, startY + padding + lineH * 0.9, { align: "center" });
+
+  // Message text
+  doc.setFontSize(8.5);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(100, 70, 0);
+  doc.text(lines, boxX + padding + iconW, startY + padding + lineH * 0.8);
+
+  return startY + boxH;
+};
+
 const drawFooter = (doc) => {
   const pageW = doc.internal.pageSize.getWidth();
   const pageH = doc.internal.pageSize.getHeight();
@@ -254,8 +297,15 @@ export const buildQuotePdf = (quoteData, income, mwRate, minima, logoBase64) => 
   const contentY = drawDocTitle(doc, divY);
   const afterShipY = drawShipmentTable(doc, quoteData, contentY);
 
+  let lastY = afterShipY;
   if (isLcl) {
     drawCostTable(doc, quoteData, income, mwRate, minima, afterShipY + 9);
+    lastY = doc.lastAutoTable.finalY + 18; // approx after total line
+  }
+
+  const hasExtras = quoteData.loadEnsurance || quoteData.originPickup || quoteData.destinationDelivery;
+  if (hasExtras) {
+    drawWarningCallout(doc, lastY + 6);
   }
 
   drawFooter(doc);
