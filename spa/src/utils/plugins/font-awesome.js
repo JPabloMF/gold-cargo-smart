@@ -30,6 +30,7 @@ import {
   faEnvelope,
   faArrowRight,
   faArrowLeft,
+  faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { faMap } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -66,6 +67,7 @@ library.add(
   faEnvelope,
   faArrowRight,
   faArrowLeft,
+  faLocationDot,
 );
 
 export { FontAwesomeIcon };

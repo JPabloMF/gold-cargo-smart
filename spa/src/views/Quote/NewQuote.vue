@@ -1,4 +1,5 @@
 <template>
+  <div class="min-h-screen flex flex-col">
   <Menubar>
     <template #start>
       <img src="/gold_cargo.png" alt="gold cargo logo" class="w-30" />
@@ -94,6 +95,57 @@
         </StepPanels>
       </Stepper>
     </Panel>
+  </div>
+
+  <footer class="mt-auto py-6 bg-white border-t border-gray-200">
+    <div class="flex flex-col items-center gap-3">
+      <a
+        href="https://goldcargo.com.co/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-primary-600 font-semibold text-base tracking-wide hover:text-primary-400 transition-colors duration-200"
+      >
+        goldcargo.com.co
+      </a>
+
+      <div class="flex items-center gap-2 text-surface-500 text-sm">
+        <font-awesome-icon icon="fa-solid fa-location-dot" class="text-primary-500" />
+        <span>Medellín, Colombia</span>
+      </div>
+
+      <div class="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-sm text-surface-600">
+        <a
+          href="https://wa.me/573167465762"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-1.5 hover:text-green-600 transition-colors duration-200"
+        >
+          <font-awesome-icon icon="fa-solid fa-phone" class="text-green-500 text-base" />
+          +57 316 7465762
+        </a>
+        <span class="text-surface-300">·</span>
+        <a
+          href="https://wa.me/573046280055"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-1.5 hover:text-green-600 transition-colors duration-200"
+        >
+          <font-awesome-icon icon="fa-solid fa-phone" class="text-green-500 text-base" />
+          +57 304 6280055
+        </a>
+      </div>
+
+      <a
+        href="mailto:manager@goldcargo.com.co"
+        class="flex items-center gap-1.5 text-sm text-surface-600 hover:text-primary-500 transition-colors duration-200"
+      >
+        <font-awesome-icon icon="fa-solid fa-envelope" class="text-primary-400" />
+        manager@goldcargo.com.co
+      </a>
+
+      <p class="text-xs text-surface-400 mt-1">&copy; {{ new Date().getFullYear() }} Gold Cargo. Todos los derechos reservados.</p>
+    </div>
+  </footer>
   </div>
 </template>
 
