@@ -3,7 +3,7 @@
     <Divider align="center" type="dotted">
       <b>Selecciona el servicio que necesitas</b>
     </Divider>
-    <div class="flex flex-wrap justify-between gap-y-5">
+    <div class="flex flex-wrap justify-between">
       <Card class="h-full w-full lg:w-[33%]">
         <template #title>
           <div class="flex justify-between items-center">
@@ -15,7 +15,7 @@
           </div>
         </template>
         <template #content>
-          <p class="m-0">
+          <p class="m-0 text-xl">
             Servicios relacionados con el transporte marítimo, incluyendo
             tarifas, rutas y tiempos de tránsito.
           </p>
@@ -36,7 +36,7 @@
             </div>
           </template>
           <template #content>
-            <p class="m-0">
+            <p class="m-0 text-xl">
               Servicios relacionados con el despacho aduanero, incluyendo
               tarifas, requisitos y tiempos de procesamiento.
             </p>
@@ -58,7 +58,7 @@
             </div>
           </template>
           <template #content>
-            <p class="m-0">
+            <p class="m-0 text-xl">
               Servicios relacionados con el transporte terrestre, incluyendo
               tarifas, rutas y tiempos de tránsito.
             </p>

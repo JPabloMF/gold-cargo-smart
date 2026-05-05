@@ -137,6 +137,9 @@ export const useQuoteGenerator = () => {
       // Save to quote history (also increments the global counter on the backend)
       history.addEntry({
         customer: store.customerName || "—",
+        phone: store.customerPhone || "",
+        email: store.customerEmail || "",
+        annotations: store.customerAnnotations || "",
         origin: store.selectedOriginPort,
         destination: store.selectedDestinationPort?.name ?? store.selectedDestinationPort,
         type: store.selectedLoadType?.value?.toUpperCase() ?? store.selectedLoadType,

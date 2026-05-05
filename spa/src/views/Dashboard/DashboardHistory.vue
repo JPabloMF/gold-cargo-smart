@@ -4,7 +4,10 @@ import { storeToRefs } from 'pinia';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
 import { useQuoteHistoryStore } from '@/stores/quoteHistory';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const filters = ref({
   global: { value: null }
@@ -14,6 +17,52 @@ const historyStore = useQuoteHistoryStore();
 const { entries: quotes, loading } = storeToRefs(historyStore);
 
 onMounted(() => historyStore.fetchEntries());
+
+const exportPdf = () => {
+  const doc = new jsPDF({ orientation: 'landscape' });
+
+  doc.setFontSize(16);
+  doc.setTextColor(44, 61, 105); // brand navy
+  doc.text('Historial de Cotizaciones', 14, 16);
+
+  doc.setFontSize(9);
+  doc.setTextColor(100);
+  doc.text(`Generado: ${new Date().toLocaleDateString('es-CO')}`, 14, 22);
+
+  const columns = [
+    { header: 'Fecha',         dataKey: 'date' },
+    { header: 'Cliente',       dataKey: 'customer' },
+    { header: 'Teléfono',      dataKey: 'phone' },
+    { header: 'Correo',        dataKey: 'email' },
+    { header: 'Origen',        dataKey: 'origin' },
+    { header: 'Destino',       dataKey: 'destination' },
+    { header: 'Tipo de Carga', dataKey: 'type' },
+    { header: 'Observaciones', dataKey: 'annotations' },
+  ];
+
+  const rows = quotes.value.map(q => ({
+    date:        q.createdAt?.slice(0, 10) ?? '—',
+    customer:    q.customer   ?? '—',
+    phone:       q.phone      || '—',
+    email:       q.email      || '—',
+    origin:      q.origin     ?? '—',
+    destination: q.destination ?? '—',
+    type:        q.type       ?? '—',
+    annotations: q.annotations || '—',
+  }));
+
+  autoTable(doc, {
+    startY: 27,
+    columns,
+    body: rows,
+    styles: { fontSize: 8, cellPadding: 3 },
+    headStyles: { fillColor: [44, 61, 105], textColor: 255, fontStyle: 'bold' },
+    alternateRowStyles: { fillColor: [248, 250, 252] },
+    columnStyles: { annotations: { cellWidth: 50 } },
+  });
+
+  doc.save(`cotizaciones_${new Date().toISOString().slice(0, 10)}.pdf`);
+};
 </script>
 
 <template>
@@ -28,6 +77,13 @@ onMounted(() => historyStore.fetchEntries());
           <i class="pi pi-search"></i>
           <InputText v-model="filters.global.value" placeholder="Buscar cotizaciones..." class="search-input" />
         </span>
+        <Button
+          icon="pi pi-file-pdf"
+          label="Exportar PDF"
+          :disabled="!quotes.length"
+          @click="exportPdf"
+          class="export-btn"
+        />
       </div>
     </div>
 
@@ -43,18 +99,27 @@ onMounted(() => historyStore.fetchEntries());
         class="custom-table"
         :filters="filters"
         filterDisplay="menu"
-        :globalFilterFields="['customer', 'origin', 'destination', 'type']"
+        :globalFilterFields="['customer', 'phone', 'email', 'origin', 'destination', 'type', 'annotations']"
       >
-        <Column field="_id" header="ID" sortable></Column>
         <Column header="Fecha" sortable sortField="createdAt">
           <template #body="slotProps">
             {{ slotProps.data.createdAt?.slice(0, 10) }}
           </template>
         </Column>
         <Column field="customer" header="Cliente" sortable></Column>
+        <Column field="phone" header="Teléfono" sortable></Column>
+        <Column field="email" header="Correo" sortable></Column>
         <Column field="origin" header="Origen" sortable></Column>
         <Column field="destination" header="Destino" sortable></Column>
         <Column field="type" header="Tipo de Carga" sortable></Column>
+        <Column field="annotations" header="Observaciones">
+          <template #body="slotProps">
+            <span v-if="slotProps.data.annotations" v-tooltip.top="slotProps.data.annotations" class="decoration-dotted">
+              {{ slotProps.data.annotations.length > 40 ? slotProps.data.annotations.slice(0, 40) + '…' : slotProps.data.annotations }}
+            </span>
+            <span v-else class="text-surface-300">—</span>
+          </template>
+        </Column>
       </DataTable>
     </div>
   </div>
@@ -91,10 +156,21 @@ onMounted(() => historyStore.fetchEntries());
   overflow: hidden;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
 .search-input {
   font-size: 1.2rem;
   padding: 0.6rem 1rem 0.6rem 2.8rem;
   width: 22rem;
+}
+
+.export-btn {
+  font-size: 1.2rem;
+  white-space: nowrap;
 }
 
 :deep(.p-input-icon-left i) {

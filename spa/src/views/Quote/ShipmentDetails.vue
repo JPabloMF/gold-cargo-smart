@@ -4,15 +4,7 @@
       <b>Completa la información</b>
     </Divider>
     <div class="flex flex-wrap justify-center gap-5">
-      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
-        <InputText
-          v-model="store.customerName"
-          inputId="customer_name"
-          class="w-full"
-        />
-        <label for="customer_name">Nombre del Cliente</label>
-      </FloatLabel>
-      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
+      <FloatLabel class="w-full lg:w-1/4 md:w-full sm:w-full" variant="on">
         <Select
           v-model="store.selectedOriginPort"
           :options="originPorts"
@@ -23,6 +15,7 @@
           :disabled="loadingOriginPorts"
           inputId="origin_port"
           class="w-full"
+          size="large"
         >
           <template #value="slotProps">
             <span v-if="slotProps.value">{{ originPorts.find(o => o.value === slotProps.value)?.label }}</span>
@@ -36,15 +29,16 @@
             <font-awesome-icon icon="fa-regular fa-map" />
           </template>
         </Select>
-        <label for="origin_port">Pais de Origen (POL)</label>
+        <label for="origin_port" class="text-base">Pais de Origen (POL)</label>
       </FloatLabel>
-      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
+      <FloatLabel class="w-full lg:w-1/4 md:w-full sm:w-full" variant="on">
         <Select
           v-model="store.selectedDestinationPort"
           :options="destinationPorts"
           inputId="destination_port"
           optionLabel="name"
           class="w-full"
+          size="large"
         >
           <template #option="slotProps">
             <div class="flex items-center gap-2 text-base">
@@ -55,15 +49,16 @@
             <font-awesome-icon icon="fa-regular fa-map" />
           </template>
         </Select>
-        <label for="destination_port">Lugar de Destino</label>
+        <label for="destination_port" class="text-base">Lugar de Destino</label>
       </FloatLabel>
-      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
+      <FloatLabel class="w-full lg:w-1/4 md:w-full sm:w-full" variant="on">
         <Select
           v-model="store.selectedLoadType"
           :options="loadTypes"
           inputId="loadt_type"
           optionLabel="name"
           class="w-full"
+          size="large"
         >
           <template #option="slotProps">
             <div class="flex items-center gap-2 text-base">
@@ -74,7 +69,7 @@
             <font-awesome-icon icon="fa-solid fa-truck-ramp-box" />
           </template>
         </Select>
-        <label for="loadt_type">Tipo de Carga</label>
+        <label for="loadt_type" class="text-base">Tipo de Carga</label>
       </FloatLabel>
     </div>
   </div>
@@ -84,7 +79,6 @@
 import Divider from "primevue/divider";
 import Select from "primevue/select";
 import FloatLabel from "primevue/floatlabel";
-import InputText from "primevue/inputtext";
 import { ref, onMounted } from "vue";
 import { useQuoteStore } from "@/stores/quote";
 import { COUNTRIES, LOAD_TYPES, DESTINATION_PORTS } from "@/utils/constants";

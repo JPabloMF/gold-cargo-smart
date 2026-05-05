@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 const quoteSchema = new mongoose.Schema(
   {
     customer: { type: String, default: "—" },
+    phone: { type: String, default: "" },
+    email: { type: String, default: "" },
+    annotations: { type: String, default: "" },
     origin: { type: String, required: true },
     destination: { type: String, required: true },
     type: { type: String, required: true },

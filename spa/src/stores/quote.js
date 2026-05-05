@@ -3,6 +3,9 @@ import { ref, computed } from "vue";
 
 export const useQuoteStore = defineStore("quote", () => {
   const customerName = ref("");
+  const customerPhone = ref("");
+  const customerEmail = ref("");
+  const customerAnnotations = ref("");
   const fleteChecked = ref(true);
   const aduanaChecked = ref(false);
   const terresteChecked = ref(false);
@@ -15,6 +18,18 @@ export const useQuoteStore = defineStore("quote", () => {
   const loadEnsurance = ref(false);
   const originPickup = ref(false);
   const destinationDelivery = ref(false);
+
+  const phoneRegex = /^[+]?[\d\s\-().]{7,20}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const customerInfoValid = computed(() => {
+    if (!customerName.value.trim()) return false;
+    if (customerPhone.value && !phoneRegex.test(customerPhone.value)) return false;
+    if (customerEmail.value && !emailRegex.test(customerEmail.value)) return false;
+    console.log("true");
+    
+    return true;
+  });
 
   const summary = computed(() => {
     const summaryData = [];
@@ -94,6 +109,10 @@ export const useQuoteStore = defineStore("quote", () => {
 
   return {
     customerName,
+    customerPhone,
+    customerEmail,
+    customerAnnotations,
+    customerInfoValid,
     fleteChecked,
     aduanaChecked,
     terresteChecked,
