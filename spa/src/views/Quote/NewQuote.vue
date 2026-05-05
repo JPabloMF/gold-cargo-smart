@@ -4,7 +4,9 @@
       <img src="/gold_cargo.png" alt="gold cargo logo" class="w-30" />
     </template>
     <template #end>
-      <Button label="Contactanos" severity="success"></Button>
+      <a href="https://wa.me/573167465762" target="_blank" rel="noopener noreferrer">
+        <Button label="Contactanos" severity="success"></Button>
+      </a>
     </template>
   </Menubar>
   <div class="flex justify-center p-[0.5%] text-2xl">
