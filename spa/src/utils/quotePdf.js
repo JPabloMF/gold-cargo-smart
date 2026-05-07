@@ -375,5 +375,6 @@ export const buildQuotePdf = (quoteData, income, mwRate, minima, fclFlete, logoB
 
   drawFooter(doc);
 
-  doc.save(`Cotizacion_GoldCargo_${new Date().toISOString().slice(0, 10)}.pdf`);
+  const prefix = isLcl ? "LCL" : "FCL";
+  doc.save(`${prefix}_Cotizacion_GoldCargo_${new Date().toISOString().slice(0, 10)}.pdf`);
 };
