@@ -137,6 +137,67 @@ const drawShipmentTable = (doc, quoteData, startY) => {
   return doc.lastAutoTable.finalY;
 };
 
+const drawFclCostTable = (doc, quoteData, income, fclFlete, startY) => {
+  const pageW = doc.internal.pageSize.getWidth();
+
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(...NAVY);
+  doc.text("Cálculo de la Cotización (FCL)", M, startY);
+
+  const rows = [];
+  let grandTotal = 0;
+
+  // Flete — no IVA
+  const containerName = quoteData.selectedContainerType?.name ?? "-";
+  if (fclFlete != null) {
+    rows.push([`Flete (Contenedor ${containerName})`, fmt(fclFlete), "-", fmt(fclFlete)]);
+    grandTotal += fclFlete;
+  } else {
+    rows.push([`Flete (Contenedor ${containerName})`, "No disponible", "-", "-"]);
+  }
+
+  const fees = [
+    { label: "Emisión BL",        base: Number(income.emisionEnDestinoBL) || 0 },
+    { label: "Gastos en Destino", base: Number(income.gastosEnDestino) || 0 },
+    { label: "Radicación BL",     base: Number(income.radicacionBL) || 0 },
+  ];
+
+  for (const fee of fees) {
+    const iva = fee.base * IVA;
+    const total = fee.base + iva;
+    grandTotal += total;
+    rows.push([fee.label, fmt(fee.base), fmt(iva), fmt(total)]);
+  }
+
+  rows.push([
+    { content: "TOTAL", styles: { fontStyle: "bold", textColor: [255, 255, 255], fillColor: NAVY } },
+    { content: "", styles: { fillColor: NAVY } },
+    { content: "", styles: { fillColor: NAVY } },
+    { content: fmt(grandTotal), styles: { fontStyle: "bold", textColor: [...NAVY], fillColor: GOLD } },
+  ]);
+
+  autoTable(doc, {
+    startY: startY + 4,
+    head: [["Concepto", "Base (USD)", "IVA 19%", "Total (USD)"]],
+    body: rows,
+    theme: "striped",
+    headStyles: { fillColor: NAVY, textColor: [255, 255, 255], fontStyle: "bold" },
+    alternateRowStyles: { fillColor: [235, 240, 250] },
+    styles: { fontSize: 9, textColor: [30, 30, 30] },
+    columnStyles: { 0: { cellWidth: 60 }, 1: { cellWidth: 40 }, 2: { cellWidth: 30 }, 3: { cellWidth: 35 } },
+    margin: { left: M, right: M },
+  });
+
+  const afterY = doc.lastAutoTable.finalY + 9;
+  doc.setFontSize(13);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(...NAVY);
+  doc.text("TOTAL COTIZACIÓN:", pageW / 2 - 2, afterY, { align: "right" });
+  doc.setTextColor(...GOLD);
+  doc.text(fmt(grandTotal), pageW / 2 + 1, afterY, { align: "left" });
+};
+
 const drawCostTable = (doc, quoteData, income, mwRate, minima, startY) => {
   const pageW = doc.internal.pageSize.getWidth();
   const dims = parseDimensions(quoteData.dimensions);
@@ -283,13 +344,14 @@ const drawFooter = (doc) => {
 
 /**
  * Builds and downloads the quote PDF.
- * @param {object} quoteData  - Shipment fields from the quote store
- * @param {object} income     - Destination fees from the /income API
- * @param {number|null} mwRate   - M/W rate from the rates table
- * @param {number|null} minima   - Minimum charge from the rates table
+ * @param {object} quoteData     - Shipment fields from the quote store
+ * @param {object} income        - Destination fees from the /income API
+ * @param {number|null} mwRate   - M/W rate from the LCL rates table
+ * @param {number|null} minima   - Minimum charge from the LCL rates table
+ * @param {number|null} fclFlete - Flete from the FCL rates table (flete20 or flete40)
  * @param {string|null} logoBase64 - Company logo as a data URL
  */
-export const buildQuotePdf = (quoteData, income, mwRate, minima, logoBase64) => {
+export const buildQuotePdf = (quoteData, income, mwRate, minima, fclFlete, logoBase64) => {
   const doc = new jsPDF();
   const isLcl = quoteData.selectedLoadType.value === "lcl";
 
@@ -300,7 +362,10 @@ export const buildQuotePdf = (quoteData, income, mwRate, minima, logoBase64) => 
   let lastY = afterShipY;
   if (isLcl) {
     drawCostTable(doc, quoteData, income, mwRate, minima, afterShipY + 9);
-    lastY = doc.lastAutoTable.finalY + 18; // approx after total line
+    lastY = doc.lastAutoTable.finalY + 18;
+  } else {
+    drawFclCostTable(doc, quoteData, income, fclFlete, afterShipY + 9);
+    lastY = doc.lastAutoTable.finalY + 18;
   }
 
   const hasExtras = quoteData.loadEnsurance || quoteData.originPickup || quoteData.destinationDelivery;

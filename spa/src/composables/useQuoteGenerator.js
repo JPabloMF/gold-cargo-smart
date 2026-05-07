@@ -1,7 +1,7 @@
 import { ref, computed } from "vue";
 import { useQuoteStore } from "@/stores/quote";
 import { useQuoteHistoryStore } from "@/stores/quoteHistory";
-import { buildQuotePdf, parseDimensions } from "@/utils/quotePdf";
+import { buildQuotePdf } from "@/utils/quotePdf";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -100,9 +100,11 @@ export const useQuoteGenerator = () => {
       }
       const income = incomeResult.data[0];
 
-      // Fetch M/W rate and minimum for the selected POL (LCL only)
+      // Fetch rates depending on load type
       let mwRate = null;
       let minima = null;
+      let fclFlete = null;
+
       if (store.selectedLoadType.value === "lcl") {
         const ratesResp = await fetch(`${API_URL}/rates`);
         if (ratesResp.ok) {
@@ -112,6 +114,23 @@ export const useQuoteGenerator = () => {
             if (row) {
               mwRate = getMwRate(row);
               minima = getMinima(row);
+            }
+          }
+        }
+      } else if (store.selectedLoadType.value === "fcl") {
+        const fclResp = await fetch(`${API_URL}/fclrates`);
+        if (fclResp.ok) {
+          const fclResult = await fclResp.json();
+          if (fclResult.success) {
+            const origin = store.selectedOriginPort;
+            const destination = store.selectedDestinationPort?.value ?? store.selectedDestinationPort?.name;
+            const containerValue = store.selectedContainerType?.value;
+            const rateRow = fclResult.data.find(
+              (row) => String(row.origen) === String(origin) && String(row.destino) === String(destination)
+            );
+            if (rateRow) {
+              const raw = containerValue === "20" ? rateRow.flete20 : rateRow.flete40;
+              if (raw != null) fclFlete = Number(raw);
             }
           }
         }
@@ -132,7 +151,7 @@ export const useQuoteGenerator = () => {
         destinationDelivery: store.destinationDelivery,
       };
 
-      buildQuotePdf(quoteData, income, mwRate, minima, logoBase64);
+      buildQuotePdf(quoteData, income, mwRate, minima, fclFlete, logoBase64);
 
       // Save to quote history (also increments the global counter on the backend)
       history.addEntry({
