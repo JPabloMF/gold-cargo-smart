@@ -4,34 +4,35 @@
       <b>Dimensiones del Contenedor</b>
     </Divider>
     <div class="flex flex-wrap justify-center items-center gap-5">
-      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
+      <FloatLabel class="w-full lg:w-[32%] md:w-full sm:w-full" variant="on">
         <Select
           v-model="store.selectedContainerType"
           :options="containerTypes"
           inputId="container_type"
           optionLabel="name"
           class="w-full"
+          size="large"
         />
-        <label for="container_type">Tipo de Contenedor</label>
+        <label for="container_type" class="text-base">Tipo de Contenedor</label>
       </FloatLabel>
-      <FloatLabel class="w-full lg:w-56 md:w-full sm:w-full" variant="on">
+      <FloatLabel class="w-full lg:w-[32%] md:w-full sm:w-full" variant="on">
         <IconField>
-          <InputNumber id="weight" class="w-full" v-model="store.weight" showClear />
+          <InputNumber id="weight" class="w-full" size="large" v-model="store.weight" showClear />
           <InputIcon>
             <font-awesome-icon icon="fa-solid fa-weight-hanging" />
           </InputIcon>
         </IconField>
-        <label for="weight">Peso en Kg</label>
+        <label for="weight" class="text-base">Peso en Kg</label>
       </FloatLabel>
-      <Fieldset class="w-full lg:w-56 md:w-full sm:w-full" legend="IMO">
+      <Fieldset class="w-full lg:w-[32%] md:w-full sm:w-full" legend="IMO">
         <RadioButtonGroup name="ingredient" class="flex flex-wrap gap-4">
           <div class="flex items-center gap-2">
-            <RadioButton inputId="cheese" value="Cheese" />
-            <label for="cheese">Si</label>
+            <RadioButton inputId="cheese" value="Cheese" size="large" />
+            <label for="cheese" class="text-base">Si</label>
           </div>
           <div class="flex items-center gap-2">
-            <RadioButton inputId="mushroom" value="Mushroom" />
-            <label for="mushroom">No</label>
+            <RadioButton inputId="mushroom" value="Mushroom" size="large" />
+            <label for="mushroom" class="text-base">No</label>
           </div>
         </RadioButtonGroup>
       </Fieldset>

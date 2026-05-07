@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
 import rateRoutes from "./routes/rateRoutes.js";
+import fclRateRoutes from "./routes/fclRateRoutes.js";
 import incomeRoutes from "./routes/incomeRoutes.js";
 import quoteStatRoutes from "./routes/quoteStatRoutes.js";
 
@@ -25,6 +26,7 @@ app.use(express.json({ limit: "50mb" })); // Increase limit for large Excel file
 // Mount the routes
 app.use("/api/auth", authRoutes);
 app.use("/api/rates", rateRoutes);
+app.use("/api/fclrates", fclRateRoutes);
 app.use("/api/income", incomeRoutes);
 app.use("/api/quotes", quoteStatRoutes);
 

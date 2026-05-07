@@ -2002,8 +2002,8 @@ export const LOAD_TYPES = [
 export const CONTAINER_TYPES = [
   { name: "20'", value: "20" },
   { name: "40'", value: "40" },
-  { name: "40' HC", value: "40hc" },
-  { name: "40' NOR", value: "40nor" },
+  // { name: "40' HC", value: "40hc" },
+  // { name: "40' NOR", value: "40nor" },
 ];
 
 export const CONTINENTS = [
