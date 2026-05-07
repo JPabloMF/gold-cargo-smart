@@ -171,3 +171,10 @@ import { useQuoteStore } from "@/stores/quote";
 const store = useQuoteStore();
 const activeStep = ref("1");
 </script>
+
+<style>
+.p-step.p-step-active button .p-step-number{
+  background-color: #FFCF25;
+  border: none;
+}
+</style>
