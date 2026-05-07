@@ -111,7 +111,13 @@ const exportPdf = () => {
         <Column field="email" header="Correo" sortable></Column>
         <Column field="origin" header="Origen" sortable></Column>
         <Column field="destination" header="Destino" sortable></Column>
-        <Column field="type" header="Tipo de Carga" sortable></Column>
+        <Column field="type" header="Tipo de Carga" sortable>
+          <template #body="slotProps">
+            <span :class="['type-badge', slotProps.data.type?.toLowerCase()]">
+              {{ slotProps.data.type ?? '—' }}
+            </span>
+          </template>
+        </Column>
         <Column field="annotations" header="Observaciones">
           <template #body="slotProps">
             <span v-if="slotProps.data.annotations" v-tooltip.top="slotProps.data.annotations" class="decoration-dotted">
@@ -177,6 +183,26 @@ const exportPdf = () => {
   left: 0.8rem;
   font-size: 1.1rem;
   color: #94a3b8;
+}
+
+.type-badge {
+  display: inline-block;
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  &.lcl {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  &.fcl {
+    background-color: #fef9c3;
+    color: #854d0e;
+  }
 }
 
 :deep(.custom-table) {
