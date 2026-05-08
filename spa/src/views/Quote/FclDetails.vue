@@ -22,7 +22,7 @@
             <font-awesome-icon icon="fa-solid fa-weight-hanging" />
           </InputIcon>
         </IconField>
-        <label for="weight" class="text-base">Peso en Kg</label>
+        <label for="weight" class="text-base">Peso en Kg (máx. 28 000 kg)</label>
       </FloatLabel>
       <Fieldset class="w-full lg:w-[32%] md:w-full sm:w-full" legend="IMO">
         <RadioButtonGroup name="ingredient" class="flex flex-wrap gap-4">

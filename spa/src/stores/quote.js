@@ -68,7 +68,7 @@ export const useQuoteStore = defineStore("quote", () => {
       if (weight.value) {
         summaryData.push({
           field: "Peso",
-          value: `${weight.value / 1000} toneladas`,
+          value: `${parseFloat((weight.value / 1000).toFixed(1))} toneladas`,
         });
       }
 
@@ -99,7 +99,7 @@ export const useQuoteStore = defineStore("quote", () => {
       if (weight.value) {
         summaryData.push({
           field: "Peso",
-          value: `${weight.value / 1000} toneladas`,
+          value: `${parseFloat((weight.value / 1000).toFixed(1))} toneladas`,
         });
       }
     }

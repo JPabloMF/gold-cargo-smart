@@ -102,14 +102,14 @@ const drawShipmentTable = (doc, quoteData, startY) => {
 
   if (isLcl) {
     const dims = parseDimensions(quoteData.dimensions);
-    rows.push(["Peso", `${(Number(quoteData.weight) / 1000).toFixed(3)} toneladas`]);
+    rows.push(["Peso", `${parseFloat((Number(quoteData.weight) / 1000).toFixed(1))} toneladas`]);
     if (dims) {
       rows.push(["Dimensiones (m)", quoteData.dimensions]);
       rows.push(["Volumen", `${dims.volume.toFixed(3)} m³`]);
     }
   } else {
     rows.push(["Tipo de Contenedor", quoteData.selectedContainerType?.name ?? "-"]);
-    rows.push(["Peso", `${(Number(quoteData.weight) / 1000).toFixed(3)} toneladas`]);
+    rows.push(["Peso", `${parseFloat((Number(quoteData.weight) / 1000).toFixed(1))} toneladas`]);
   }
 
   const extras = [];
