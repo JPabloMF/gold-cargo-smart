@@ -37,6 +37,7 @@ const exportPdf = () => {
     { header: 'Origen',        dataKey: 'origin' },
     { header: 'Destino',       dataKey: 'destination' },
     { header: 'Tipo de Carga', dataKey: 'type' },
+    { header: 'Total (USD)',   dataKey: 'grandTotal' },
     { header: 'Observaciones', dataKey: 'annotations' },
   ];
 
@@ -48,6 +49,7 @@ const exportPdf = () => {
     origin:      q.origin     ?? '—',
     destination: q.destination ?? '—',
     type:        q.type       ?? '—',
+    grandTotal:  q.grandTotal != null ? `USD ${Number(q.grandTotal).toFixed(2)}` : '—',
     annotations: q.annotations || '—',
   }));
 
@@ -118,6 +120,14 @@ const exportPdf = () => {
             </span>
           </template>
         </Column>
+        <Column field="grandTotal" header="Total (USD)" sortable>
+          <template #body="slotProps">
+            <span v-if="slotProps.data.grandTotal != null" class="total-amount">
+              USD {{ Number(slotProps.data.grandTotal).toFixed(2) }}
+            </span>
+            <span v-else class="text-surface-300">—</span>
+          </template>
+        </Column>
         <Column field="annotations" header="Observaciones">
           <template #body="slotProps">
             <span v-if="slotProps.data.annotations" v-tooltip.top="slotProps.data.annotations" class="decoration-dotted">
@@ -183,6 +193,11 @@ const exportPdf = () => {
   left: 0.8rem;
   font-size: 1.1rem;
   color: #94a3b8;
+}
+
+.total-amount {
+  font-weight: 700;
+  color: #1e293b;
 }
 
 .type-badge {

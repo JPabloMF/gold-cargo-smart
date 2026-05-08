@@ -1,7 +1,7 @@
 import { ref, computed } from "vue";
 import { useQuoteStore } from "@/stores/quote";
 import { useQuoteHistoryStore } from "@/stores/quoteHistory";
-import { buildQuotePdf } from "@/utils/quotePdf";
+import { buildQuotePdf, parseDimensions } from "@/utils/quotePdf";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -60,6 +60,35 @@ const findRateRow = (ratesData, pol) => {
 const getMwRate = (row) => extractTariff(row);
 
 const getMinima = (row) => row["MIN"] ?? null;
+
+const IVA = 0.19;
+
+const computeGrandTotal = (loadType, income, mwRate, minima, fclFlete, quoteData) => {
+  if (loadType === "lcl") {
+    const dims = parseDimensions(quoteData.dimensions);
+    const pesoTons = Number(quoteData.weight) / 1000;
+    const volumenM3 = dims ? dims.volume : 0;
+    const winner = Math.max(pesoTons, volumenM3);
+
+    let total = 0;
+    if (mwRate !== null) {
+      const mw = Number(mwRate);
+      const min = minima !== null ? Number(minima) : 0;
+      const fleteCalc = winner * mw;
+      total += min > 0 ? Math.max(fleteCalc, min) : fleteCalc;
+    }
+    for (const key of ["radicacionBL", "gastosEnDestino", "collectFee", "emisionEnDestinoBL"]) {
+      total += (Number(income[key]) || 0) * (1 + IVA);
+    }
+    return +total.toFixed(2);
+  } else {
+    let total = fclFlete != null ? fclFlete : 0;
+    for (const key of ["emisionEnDestinoBL", "gastosEnDestino", "radicacionBL"]) {
+      total += (Number(income[key]) || 0) * (1 + IVA);
+    }
+    return +total.toFixed(2);
+  }
+};
 
 const loadLogoBase64 = async () => {
   try {
@@ -169,6 +198,8 @@ export const useQuoteGenerator = () => {
 
       buildQuotePdf(quoteData, income, mwRate, minima, fclFlete, logoBase64);
 
+      const grandTotal = computeGrandTotal(loadType, income, mwRate, minima, fclFlete, quoteData);
+
       // Save to quote history (also increments the global counter on the backend)
       history.addEntry({
         customer: store.customerName || "—",
@@ -178,6 +209,7 @@ export const useQuoteGenerator = () => {
         origin: store.selectedOriginPort,
         destination: store.selectedDestinationPort?.name ?? store.selectedDestinationPort,
         type: store.selectedLoadType?.value?.toUpperCase() ?? store.selectedLoadType,
+        grandTotal,
       });
     } catch (err) {
       console.error("[useQuoteGenerator] Error generating quote:", err);
