@@ -102,8 +102,9 @@ export const useQuoteGenerator = () => {
     errorMsg.value = "";
 
     try {
-      // Fetch destination fees (public endpoint, no auth required)
-      const incomeResp = await fetch(`${API_URL}/income`);
+      // Fetch destination fees filtered by load type (public endpoint, no auth required)
+      const loadType = store.selectedLoadType.value;
+      const incomeResp = await fetch(`${API_URL}/income?type=${loadType}`);
       if (!incomeResp.ok) {
         errorMsg.value = "No se pudo obtener la configuración de tarifas. Contacte al administrador.";
         return;

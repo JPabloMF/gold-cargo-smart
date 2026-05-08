@@ -2,12 +2,13 @@ import Income from "../models/Income.js";
 
 export const createIncome = async (req, res) => {
   try {
-    const { radicacionBL, gastosEnDestino, collectFee, emisionEnDestinoBL } = req.body;
+    const { type, radicacionBL, gastosEnDestino, collectFee, emisionEnDestinoBL } = req.body;
     const createdBy = req.user?.email || "Unknown";
 
-    console.log(`[Income] Creating income entry by ${createdBy}`);
+    console.log(`[Income] Creating ${type} income entry by ${createdBy}`);
 
     const income = await Income.create({
+      type,
       radicacionBL,
       gastosEnDestino,
       collectFee,
@@ -25,8 +26,10 @@ export const createIncome = async (req, res) => {
 
 export const getIncomes = async (req, res) => {
   try {
-    console.log("[Income] Fetching all income entries");
-    const incomes = await Income.find({}).sort({ createdAt: -1 });
+    const { type } = req.query;
+    const filter = type ? { type } : {};
+    console.log(`[Income] Fetching income entries${type ? ` (type=${type})` : ""}`);
+    const incomes = await Income.find(filter).sort({ createdAt: -1 });
     res.json({ success: true, data: incomes });
   } catch (error) {
     console.error("[Income] Error fetching income entries:", error);

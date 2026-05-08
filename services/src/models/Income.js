@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const incomeSchema = new mongoose.Schema(
   {
+    type: {
+      type: String,
+      enum: ["lcl", "fcl"],
+      required: true,
+    },
     radicacionBL: {
       type: Number,
       required: true,
@@ -12,7 +17,6 @@ const incomeSchema = new mongoose.Schema(
     },
     collectFee: {
       type: Number,
-      required: true,
     },
     emisionEnDestinoBL: {
       type: Number,
