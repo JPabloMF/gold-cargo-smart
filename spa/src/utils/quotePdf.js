@@ -322,6 +322,50 @@ const drawWarningCallout = (doc, startY) => {
   return startY + boxH;
 };
 
+const drawInfoCallout = (doc, startY) => {
+  const pageW = doc.internal.pageSize.getWidth();
+  const boxX = M;
+  const boxW = pageW - M * 2;
+  const padding = 4;
+  const iconW = 8;
+  const msg =
+    "La tarifa está sujeta a un análisis posterior por parte del área comercial, considerando las dimensiones del " +
+    "envío debido a la constante fluctuación que puede presentarse en la misma.";
+
+  doc.setFontSize(8.5);
+  doc.setFont("helvetica", "normal");
+  const lines = doc.splitTextToSize(msg, boxW - padding * 2 - iconW);
+  const lineH = 4.5;
+  const boxH = lines.length * lineH + padding * 2;
+
+  // Background
+  doc.setFillColor(220, 235, 255);
+  doc.roundedRect(boxX, startY, boxW, boxH, 2, 2, "F");
+
+  // Left accent bar (navy)
+  doc.setFillColor(...NAVY);
+  doc.roundedRect(boxX, startY, 3, boxH, 1, 1, "F");
+
+  // Border
+  doc.setDrawColor(...NAVY);
+  doc.setLineWidth(0.4);
+  doc.roundedRect(boxX, startY, boxW, boxH, 2, 2, "S");
+
+  // Info icon
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(...NAVY);
+  doc.text("i", boxX + 3 + 3, startY + padding + lineH * 0.9, { align: "center" });
+
+  // Message text
+  doc.setFontSize(8.5);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(20, 40, 90);
+  doc.text(lines, boxX + padding + iconW, startY + padding + lineH * 0.8);
+
+  return startY + boxH;
+};
+
 const drawFooter = (doc) => {
   const pageW = doc.internal.pageSize.getWidth();
   const pageH = doc.internal.pageSize.getHeight();
@@ -363,6 +407,7 @@ export const buildQuotePdf = (quoteData, income, mwRate, minima, fclFlete, logoB
   if (isLcl) {
     drawCostTable(doc, quoteData, income, mwRate, minima, afterShipY + 9);
     lastY = doc.lastAutoTable.finalY + 18;
+    lastY = drawInfoCallout(doc, lastY) + 6;
   } else {
     drawFclCostTable(doc, quoteData, income, fclFlete, afterShipY + 9);
     lastY = doc.lastAutoTable.finalY + 18;
