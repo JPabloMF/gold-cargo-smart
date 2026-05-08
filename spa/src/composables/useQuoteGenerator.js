@@ -11,7 +11,7 @@ const API_URL = import.meta.env.VITE_API_URL;
  * that Excel imports can introduce around the key name.
  */
 const extractTariff = (row) => {
-  const key = Object.keys(row).find((k) => k === "TARIFA  W/M");
+  const key = Object.keys(row).find((k) => k.replace(/\s+/g, '') === "TARIFAW/M");
   return key != null ? row[key] : null;
 };
 
