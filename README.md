@@ -16,9 +16,9 @@ Plataforma de cotización y gestión de carga marítima internacional para empre
 
 ### Dashboard administrativo (requiere autenticación)
 - **Resumen general** — KPIs, estadísticas de cotizaciones y análisis de destinos con gráficos
-- **Historial de cotizaciones** — Tabla con todas las cotizaciones enviadas y datos del cliente
-- **Gestión de tarifas** — Carga de archivos Excel con tarifas por continente (Asia, América, Europa, Oceanía, África, Antártida)
-- **Gestión de ingresos** — Registro de costos operacionales: BL filing, gastos en destino, collect fees, emisión BL destino
+- **Historial de cotizaciones** — Tabla con todas las cotizaciones enviadas, datos del cliente y **total USD calculado** al momento de generación. Exportable a PDF.
+- **Gestión de tarifas** — Carga de archivos Excel con tarifas por continente (Asia, América, Europa, Oceanía, África, Antártida). Soporta puertos de destino dinámicos para envíos LCL.
+- **Gestión de ingresos** — Registro de costos operacionales por tipo de carga (LCL/FCL): BL filing, gastos en destino, collect fees, emisión BL destino
 
 ---
 
@@ -81,8 +81,9 @@ gold-cargo-smart/
 │   └── src/
 │       ├── models/             # Esquemas Mongoose
 │       │   ├── User.js
-│       │   ├── Quote.js
+│       │   ├── Quote.js        # Incluye grandTotal calculado al generar PDF
 │       │   ├── Rate.js
+│       │   ├── FclRate.js
 │       │   ├── Income.js
 │       │   └── QuoteStat.js
 │       ├── controllers/
@@ -189,9 +190,14 @@ Compatible con cualquier plataforma Node.js (Render, Railway, etc.). Requiere co
 
 ## Historial de cambios relevantes
 
+- **Total USD en historial**: el `grandTotal` calculado al generar el PDF se almacena en la BD y se muestra como columna en la tabla de historial y en el PDF exportado
+- Filtrado de tarifas de ingresos por tipo de carga (LCL/FCL) para separar configuraciones operacionales
+- Puertos de destino dinámicos en cotizaciones LCL obtenidos desde las tarifas configuradas
+- Normalización de espacios en la extracción de claves de tarifa W/M (tolerancia a caracteres invisibles de Excel)
+- Peso formateado a un decimal en todos los componentes del flujo de cotización
 - Generación y exportación de cotizaciones en PDF con logo y cabecera de marca
 - Integración de gráficos analíticos en el dashboard (cotizaciones y destinos)
-- Gestión de tarifas mediante importación de Excel por continente
+- Gestión de tarifas LCL y FCL mediante importación de Excel por continente/ruta
 - Autenticación JWT con expiración de 2 horas y cierre de sesión automático
 - Cabeceras de autorización automáticas en todas las peticiones autenticadas
 - Refactorización del estado reactivo del dashboard usando `storeToRefs`
