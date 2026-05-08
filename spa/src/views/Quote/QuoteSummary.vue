@@ -22,7 +22,7 @@
         {{ costError }}
       </div>
 
-      <template v-else-if="fclBreakdown">
+      <!-- <template v-else-if="fclBreakdown">
         <h3 class="text-xl font-semibold mt-4 mb-2" style="color: #2C3D69;">Desglose de Costos FCL</h3>
         <DataTable :value="fclBreakdown.rows" class="text-base">
           <Column field="concepto" header="Concepto" />
@@ -36,7 +36,7 @@
             USD {{ fclBreakdown.grandTotal.toFixed(2) }}
           </span>
         </div>
-      </template>
+      </template> -->
     </template>
 
     <div class="mt-4 flex flex-col gap-2">
