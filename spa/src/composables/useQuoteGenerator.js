@@ -6,21 +6,36 @@ import { buildQuotePdf } from "@/utils/quotePdf";
 const API_URL = import.meta.env.VITE_API_URL;
 
 /**
+ * Returns the tariff value from a rate row ("TARIFA W/M" column).
+ * Searches dynamically to tolerate extra spaces or invisible characters
+ * that Excel imports can introduce around the key name.
+ */
+const extractTariff = (row) => {
+  const key = Object.keys(row).find((k) => k === "TARIFA  W/M");
+  return key != null ? row[key] : null;
+};
+
+const hasTariff = (row) =>
+  extractTariff(row) != null || row["MIN"] != null;
+
+/**
  * Find the rate row for a given POL.
  * First tries an exact POL match that already has the tariff fields populated.
  * If not found, falls back to any row with the same PAIS (country) that has the fields.
  * This handles tables where TARIFA W/M and MIN are stored once per country.
  */
 const findRateRow = (ratesData, pol) => {
+  const normalPol = String(pol).trim().toUpperCase();
   let polMatch = null;   // exact POL match (may lack tariff fields)
   let paisMatch = null;  // first row of same PAIS with tariff fields populated
 
   for (const continent of ratesData) {
     for (const row of continent.data) {
-      if (row.POL === pol) {
+      if (String(row.POL ?? "").trim().toUpperCase() === normalPol) {
         polMatch = row;
+        
         // If this exact POL row has the tariff, we're done
-        if (row["TARIFA W/M"] != null || row["MIN"] != null) return row;
+        if (hasTariff(row)) return row;
       }
     }
   }
@@ -30,7 +45,7 @@ const findRateRow = (ratesData, pol) => {
     const targetPais = polMatch.PAIS;
     for (const continent of ratesData) {
       for (const row of continent.data) {
-        if (row.PAIS === targetPais && (row["TARIFA W/M"] != null || row["MIN"] != null)) {
+        if (row.PAIS === targetPais && hasTariff(row)) {
           paisMatch = row;
           break;
         }
@@ -42,7 +57,7 @@ const findRateRow = (ratesData, pol) => {
   return paisMatch ?? polMatch ?? null;
 };
 
-const getMwRate = (row) => row["TARIFA W/M"] ?? null;
+const getMwRate = (row) => extractTariff(row);
 
 const getMinima = (row) => row["MIN"] ?? null;
 

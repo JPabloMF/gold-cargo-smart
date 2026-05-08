@@ -231,7 +231,7 @@ const drawCostTable = (doc, quoteData, income, mwRate, minima, startY) => {
     totalBase += fleteBase;
     totalGrand += fleteBase;
   } else {
-    rows.push(["Flete", "Tarifa M/W no disponible para este origen", "-", "-"]);
+    rows.push(["Flete", "Tarifa W/M no disponible para este origen", "-", "-"]);
   }
 
   const fees = [
@@ -346,7 +346,7 @@ const drawFooter = (doc) => {
  * Builds and downloads the quote PDF.
  * @param {object} quoteData     - Shipment fields from the quote store
  * @param {object} income        - Destination fees from the /income API
- * @param {number|null} mwRate   - M/W rate from the LCL rates table
+ * @param {number|null} mwRate   - W/M rate from the LCL rates table
  * @param {number|null} minima   - Minimum charge from the LCL rates table
  * @param {number|null} fclFlete - Flete from the FCL rates table (flete20 or flete40)
  * @param {string|null} logoBase64 - Company logo as a data URL
