@@ -91,7 +91,7 @@ import Select from "primevue/select";
 import FloatLabel from "primevue/floatlabel";
 import { ref, computed } from "vue";
 import { useQuoteStore } from "@/stores/quote";
-import { COUNTRIES, LOAD_TYPES, DESTINATION_PORTS } from "@/utils/constants";
+import { COUNTRIES, LOAD_TYPES } from "@/utils/constants";
 import { apiFetch } from "@/utils/api";
 
 const store = useQuoteStore();
@@ -154,7 +154,22 @@ const destinationPorts = computed(() => {
   const type = store.selectedLoadType?.value;
 
   if (type === "lcl") {
-    return DESTINATION_PORTS;
+    const origin = store.selectedOriginPort;
+    if (!origin) return [];
+    const seen = new Set();
+    const ports = [];
+    lclRawData.value.forEach((continent) => {
+      continent.data
+        .filter((row) => row.POL === origin)
+        .forEach((row) => {
+          const val = row.POD;
+          if (val && !seen.has(val)) {
+            seen.add(val);
+            ports.push({ name: String(val), value: String(val) });
+          }
+        });
+    });
+    return ports.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   if (type === "fcl") {
