@@ -3,7 +3,10 @@ import { ref, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import InputText from 'primevue/inputtext';
+import FloatLabel from "primevue/floatlabel";
+import InputText from "primevue/inputtext";
+import IconField from "primevue/iconfield";
+import InputIcon from "primevue/inputicon";
 import Button from 'primevue/button';
 import { useQuoteHistoryStore } from '@/stores/quoteHistory';
 import jsPDF from 'jspdf';
@@ -77,16 +80,24 @@ const exportPdf = () => {
 
 <template>
   <div class="dashboard-history">
-    <div class="header">
+    <div class="header flex flex-wrap gap-2">
       <div class="info">
         <h1>Historial de Cotizaciones</h1>
         <p>Revise y gestione todas las cotizaciones históricas solicitadas a través del sistema.</p>
       </div>
       <div class="actions">
-        <span class="p-input-icon-left">
-          <i class="pi pi-search"></i>
-          <InputText v-model="filters.global.value" placeholder="Buscar cotizaciones..." class="search-input" />
-        </span>
+        <FloatLabel variant="on">
+          <IconField>
+            <InputText
+              id="searchquotes"
+              class="w-full"
+              size="large" v-model="filters.global.value"/>
+            <InputIcon>
+              <font-awesome-icon class="text-base" icon="fa-solid fa-magnifying-glass" />
+            </InputIcon>
+          </IconField>
+          <label for="searchquotes" class="text-base">Buscar cotizaciones...</label>
+        </FloatLabel>
         <Button
           icon="pi pi-file-pdf"
           label="Exportar PDF"

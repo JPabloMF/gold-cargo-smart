@@ -3,7 +3,7 @@
     <Divider align="center" type="dotted">
       <b>Selecciona el servicio que necesitas</b>
     </Divider>
-    <div class="flex flex-wrap justify-between">
+    <div class="flex flex-wrap justify-between gap-2">
       <Card class="h-full w-full lg:w-[33%]">
         <template #title>
           <div class="flex justify-between items-center">

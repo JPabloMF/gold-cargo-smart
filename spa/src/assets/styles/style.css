@@ -68,7 +68,7 @@ body {
 }
 
 /* ── Responsive Stepper ── */
-@media (max-width: 639px) {
+@media (max-width: 820px) {
   .p-steplist {
     gap: 0 !important;
   }
