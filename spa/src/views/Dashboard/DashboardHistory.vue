@@ -37,21 +37,29 @@ const exportPdf = () => {
     { header: 'Origen',        dataKey: 'origin' },
     { header: 'Destino',       dataKey: 'destination' },
     { header: 'Tipo de Carga', dataKey: 'type' },
-    { header: 'Total (USD)',   dataKey: 'grandTotal' },
-    { header: 'Observaciones', dataKey: 'annotations' },
+    { header: 'Total (USD)',         dataKey: 'grandTotal' },
+    { header: 'Servicios Adic.',     dataKey: 'additionalServices' },
+    { header: 'Observaciones',       dataKey: 'annotations' },
   ];
 
-  const rows = quotes.value.map(q => ({
-    date:        q.createdAt?.slice(0, 10) ?? '—',
-    customer:    q.customer   ?? '—',
-    phone:       q.phone      || '—',
-    email:       q.email      || '—',
-    origin:      q.origin     ?? '—',
-    destination: q.destination ?? '—',
-    type:        q.type       ?? '—',
-    grandTotal:  q.grandTotal != null ? `USD ${Number(q.grandTotal).toFixed(2)}` : '—',
-    annotations: q.annotations || '—',
-  }));
+  const rows = quotes.value.map(q => {
+    const services = [];
+    if (q.loadEnsurance)       services.push('Seguro');
+    if (q.originPickup)        services.push('Recogida');
+    if (q.destinationDelivery) services.push('Entrega');
+    return {
+      date:               q.createdAt?.slice(0, 10) ?? '—',
+      customer:           q.customer   ?? '—',
+      phone:              q.phone      || '—',
+      email:              q.email      || '—',
+      origin:             q.origin     ?? '—',
+      destination:        q.destination ?? '—',
+      type:               q.type       ?? '—',
+      grandTotal:         q.grandTotal != null ? `USD ${Number(q.grandTotal).toFixed(2)}` : '—',
+      additionalServices: services.length ? services.join(', ') : '—',
+      annotations:        q.annotations || '—',
+    };
+  });
 
   autoTable(doc, {
     startY: 27,
@@ -126,6 +134,16 @@ const exportPdf = () => {
               USD {{ Number(slotProps.data.grandTotal).toFixed(2) }}
             </span>
             <span v-else class="text-surface-300">—</span>
+          </template>
+        </Column>
+        <Column header="Servicios Adicionales">
+          <template #body="slotProps">
+            <div class="service-badges">
+              <span v-if="slotProps.data.loadEnsurance" class="service-badge ensurance">Seguro</span>
+              <span v-if="slotProps.data.originPickup" class="service-badge pickup">Recogida</span>
+              <span v-if="slotProps.data.destinationDelivery" class="service-badge delivery">Entrega</span>
+              <span v-if="!slotProps.data.loadEnsurance && !slotProps.data.originPickup && !slotProps.data.destinationDelivery" class="text-surface-300">—</span>
+            </div>
           </template>
         </Column>
         <Column field="annotations" header="Observaciones">
@@ -217,6 +235,36 @@ const exportPdf = () => {
   &.fcl {
     background-color: #fef9c3;
     color: #854d0e;
+  }
+}
+
+.service-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.service-badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &.ensurance {
+    background-color: #dcfce7;
+    color: #15803d;
+  }
+
+  &.pickup {
+    background-color: #fce7f3;
+    color: #9d174d;
+  }
+
+  &.delivery {
+    background-color: #ede9fe;
+    color: #6d28d9;
   }
 }
 

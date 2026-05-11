@@ -210,6 +210,9 @@ export const useQuoteGenerator = () => {
         destination: store.selectedDestinationPort?.name ?? store.selectedDestinationPort,
         type: store.selectedLoadType?.value?.toUpperCase() ?? store.selectedLoadType,
         grandTotal,
+        loadEnsurance: !!store.loadEnsurance,
+        originPickup: !!store.originPickup,
+        destinationDelivery: !!store.destinationDelivery,
       });
     } catch (err) {
       console.error("[useQuoteGenerator] Error generating quote:", err);

@@ -13,8 +13,8 @@ export const getQuotes = async (req, res) => {
 
 export const createQuote = async (req, res) => {
   try {
-    const { customer, phone, email, annotations, grandTotal, origin, destination, type } = req.body;
-    const quote = await Quote.create({ customer, phone, email, annotations, grandTotal, origin, destination, type });
+    const { customer, phone, email, annotations, grandTotal, origin, destination, type, loadEnsurance, originPickup, destinationDelivery } = req.body;
+    const quote = await Quote.create({ customer, phone, email, annotations, grandTotal, origin, destination, type, loadEnsurance, originPickup, destinationDelivery });
 
     // Increment the global counter as a side effect
     await QuoteStat.findOneAndUpdate(
