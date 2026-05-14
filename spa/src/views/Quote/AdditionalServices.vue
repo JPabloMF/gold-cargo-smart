@@ -8,27 +8,15 @@
     </p>
     <div class="card flex flex-wrap justify-center gap-4">
       <div class="flex items-center gap-2">
-        <Checkbox
-          v-model="store.loadEnsurance"
-          name="seguro"
-          value="loadEnsurance"
-        />
+        <Checkbox v-model="store.loadEnsurance" binary name="seguro" />
         <label for="ingredient1">Seguro de Carga</label>
       </div>
       <div class="flex items-center gap-2">
-        <Checkbox
-          v-model="store.originPickup"
-          name="recogida"
-          value="originPickup"
-        />
+        <Checkbox v-model="store.originPickup" binary name="recogida" />
         <label for="ingredient2">Recogida en Origen</label>
       </div>
       <div class="flex items-center gap-2">
-        <Checkbox
-          v-model="store.destinationDelivery"
-          name="destino"
-          value="destinationDelivery"
-        />
+        <Checkbox v-model="store.destinationDelivery" binary name="destino" />
         <label for="ingredient3">Entrega en Destino</label>
       </div>
     </div>
