@@ -4,7 +4,7 @@
       <b>Selecciona el servicio que necesitas</b>
     </Divider>
     <div class="flex flex-wrap justify-between gap-2">
-      <Card class="h-full w-full lg:w-[33%]">
+      <Card class="h-full w-full lg:w-[32%]">
         <template #title>
           <div class="flex justify-between items-center">
             <div class="flex items-center gap-2">
