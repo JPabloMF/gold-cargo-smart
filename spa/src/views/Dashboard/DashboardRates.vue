@@ -418,12 +418,20 @@ const onFclFileSelect = (event) => {
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
+    const FCL_NUMERIC_FIELDS = new Set(['flete20', 'flete40', 'emisionbl', 'diaslibres']);
+
     if (jsonData.length > 0) {
       // Normalize keys to lowercase without spaces to match FCL_COLUMNS fields
       fclState.ratesData = jsonData.map(row => {
         const normalized = {};
         for (const [k, v] of Object.entries(row)) {
-          normalized[k.toLowerCase().replace(/\s+/g, '')] = v;
+          const key = k.toLowerCase().replace(/\s+/g, '');
+          if (FCL_NUMERIC_FIELDS.has(key) && typeof v === 'string') {
+            const clean = v.replace(/usd/gi, '').trim();
+            normalized[key] = clean === '' ? v : Number(clean);
+          } else {
+            normalized[key] = v;
+          }
         }
         return normalized;
       });
